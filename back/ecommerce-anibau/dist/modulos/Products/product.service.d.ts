@@ -1,3 +1,6 @@
+import { ProductRepository } from './product.repository';
 export declare class ProductService {
-    getProduct(): string;
+    private productRepository;
+    constructor(productRepository: ProductRepository);
+    getProduct(): Promise<import("./product.entity").Products[]>;
 }
