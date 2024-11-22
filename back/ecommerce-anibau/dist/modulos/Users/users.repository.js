@@ -13,7 +13,7 @@ let UsersRepository = class UsersRepository {
         this.Users = [
             {
                 id: 1,
-                email: 'uno@mail.com',
+                email: 'nina@mail.com',
                 name: 'nina',
                 password: 'nina2000',
                 address: 'calle falsa 123',
@@ -23,7 +23,7 @@ let UsersRepository = class UsersRepository {
             },
             {
                 id: 2,
-                email: 'uno@mail.com',
+                email: 'shushi@mail.com',
                 name: 'shushi',
                 password: 'nina2000',
                 address: 'calle falsa 123',
@@ -33,7 +33,7 @@ let UsersRepository = class UsersRepository {
             },
             {
                 id: 3,
-                email: 'uno@mail.com',
+                email: 'locky@mail.com',
                 name: 'locky',
                 password: 'nina2000',
                 address: 'calle falsa 123',
@@ -43,7 +43,7 @@ let UsersRepository = class UsersRepository {
             },
             {
                 id: 4,
-                email: 'uno@mail.com',
+                email: 'manchas@mail.com',
                 name: 'manchas',
                 password: 'nina2000',
                 address: 'calle falsa 123',
@@ -55,6 +55,14 @@ let UsersRepository = class UsersRepository {
     }
     async getUser() {
         return this.Users;
+    }
+    async setUsers(users) {
+        this.Users = users;
+    }
+    async getUserbyQueries(page, limit) {
+        const initialIndex = (page - 1) * limit;
+        const lastIndex = initialIndex + limit;
+        return this.Users.slice(initialIndex, lastIndex);
     }
 };
 exports.UsersRepository = UsersRepository;

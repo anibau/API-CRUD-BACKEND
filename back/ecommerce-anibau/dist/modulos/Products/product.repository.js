@@ -48,6 +48,9 @@ let ProductRepository = class ProductRepository {
     async getProducts() {
         return this.Products;
     }
+    async setProduct(products) {
+        this.Products = products;
+    }
 };
 exports.ProductRepository = ProductRepository;
 exports.ProductRepository = ProductRepository = __decorate([

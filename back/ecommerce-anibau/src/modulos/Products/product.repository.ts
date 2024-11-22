@@ -40,4 +40,7 @@ export class ProductRepository {
   async getProducts() {
     return this.Products;
   }
+  async setProduct(products) {
+    this.Products = products;
+  }
 }
