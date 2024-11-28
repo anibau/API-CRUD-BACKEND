@@ -1,8 +1,12 @@
-export interface Products {
-    id: number;
+import { Categories } from "../categories/categories.entity";
+import { OrderDetails } from "../orderDetails/orderDetail.entity";
+export declare class Products {
+    id: string;
     name: string;
     description: string;
     price: number;
-    stock: boolean;
+    stock: number;
     imgUrl: string;
+    category: Categories;
+    orderDetails: OrderDetails[];
 }

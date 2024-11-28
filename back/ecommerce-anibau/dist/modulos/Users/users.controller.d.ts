@@ -1,32 +1,24 @@
 import { UsersService } from './users.service';
-import { Users } from './users.entity';
+import { Users } from './user.entity';
 export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
     getUsers(): Promise<Users[]>;
     getUserbyQuery(page?: string, limit?: string): Promise<Users[]>;
     getUserbyId(id: string): Promise<{
-        id: number;
-        email: string;
+        ordenes: {
+            id: string;
+            date: Date;
+        }[];
+        id: string;
         name: string;
-        address: string;
-        phone: string;
-        country?: string | undefined;
-        city?: string | undefined;
-    }>;
-    createUser(user: Omit<Users, 'id'>): Promise<{
-        name: string;
-        password: string;
         email: string;
+        phone: number;
+        country: string;
         address: string;
-        phone: string;
-        country?: string | undefined;
-        city?: string | undefined;
-        id: number;
+        city: string;
     }>;
-    updateUser(id: string, data: {
-        prop: string;
-        dato: string;
-    }): Promise<string>;
+    createUser(user: Partial<Users>): Promise<Users>;
+    updateUser(id: string, data: Partial<Users>): Promise<string>;
     deleteUser(id: string): Promise<string>;
 }

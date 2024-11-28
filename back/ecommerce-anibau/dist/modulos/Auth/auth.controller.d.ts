@@ -6,5 +6,5 @@ export declare class AuthController {
     userLogin(data: {
         email: string;
         password: string;
-    }): Promise<import("../Users/users.entity").Users>;
+    }): Promise<import("../Users/user.entity").Users>;
 }

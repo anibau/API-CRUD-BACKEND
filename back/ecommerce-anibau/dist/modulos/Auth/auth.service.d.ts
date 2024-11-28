@@ -1,8 +1,8 @@
-import { UsersRepository } from '../Users/users.repository';
-import { Users } from '../Users/users.entity';
+import { Users } from '../Users/user.entity';
+import { Repository } from 'typeorm';
 export declare class AuthService {
     private usersRepository;
-    constructor(usersRepository: UsersRepository);
+    constructor(usersRepository: Repository<Users>);
     getAuth(): string;
     getLogin(data: {
         email: string;

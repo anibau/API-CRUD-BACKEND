@@ -19,42 +19,20 @@ let UsersService = class UsersService {
     getUsers() {
         return this.userRepository.getUser();
     }
-    async getUserbyQueryParams(page, limit) {
-        return this.userRepository.getUserbyQueries(page, limit);
-    }
     async getUserbyId(id) {
-        const users = this.userRepository.getUser();
-        const user = (await users).find((user) => user.id === id);
-        if (!user) {
-            throw new Error(`User ${id} no encontrado`);
-        }
-        const { password, ...userWithoutPassword } = user;
-        return userWithoutPassword;
+        return this.userRepository.getUserbyId(id);
     }
     async createUser(body) {
-        const users = await this.userRepository.getUser();
-        const id = users.length + 1;
-        users.push({ id, ...body });
-        return { id, ...body };
+        return this.userRepository.createUser(body);
     }
     async updateUser(id, data) {
-        const users = await this.userRepository.getUser();
-        const user = users.find((user) => user.id === id);
-        if (!user) {
-            throw new Error(`usuario ${id} no encontrado`);
-        }
-        const { prop, dato } = data;
-        if (!(prop in user)) {
-            throw new Error(`la propiedad ${prop} no existe`);
-        }
-        user[prop] = dato;
-        return `ùsuario ${id} actualizado exitosamente`;
+        return this.userRepository.updateUser(id, data);
     }
     async deleteUser(id) {
-        const users = await this.userRepository.getUser();
-        const user = users.filter((user) => user.id !== id);
-        this.userRepository.setUsers(user);
-        return `ùsuario ${id} eliminado exitosamente`;
+        return this.userRepository.deleteUser(id);
+    }
+    async getUserbyQueryParams(page, limit) {
+        return this.userRepository.getUserbyQueries(page, limit);
     }
 };
 exports.UsersService = UsersService;

@@ -15,6 +15,12 @@ function ValidateRequest(request) {
 let AuthGuard = class AuthGuard {
     canActivate(context) {
         const request = context.switchToHttp().getRequest();
+        if (!request) {
+            throw new common_1.UnauthorizedException('Request object is undefined');
+        }
+        if (!ValidateRequest(request)) {
+            throw new common_1.UnauthorizedException('authorization header is invalid');
+        }
         return ValidateRequest(request);
     }
 };

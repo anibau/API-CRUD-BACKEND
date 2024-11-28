@@ -1,21 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { UsersRepository } from '../Users/users.repository';
-import { Users } from '../Users/users.entity';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Users } from '../Users/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(@InjectRepository(Users) private usersRepository: Repository<Users>) {}
   getAuth() {
     return 'get Auths';
   }
   async getLogin(data: { email: string; password: string }) {
-    const users: Users[] = await this.usersRepository.getUser();
-    const user = users.find(
-      (user) => user.email === data.email && user.password === data.password,
-    );
-    if (!user) {
-      throw new Error('Email o password incorrectos');
+    const user:Users = await this.usersRepository.findOne({where:{email: data.email, password:data.password }});
+    if(!user){
+      throw new NotFoundException(`Email o password incorrectos`)
     }
-    return user;
+    return user
+    // const user = users.find(
+    //   (user) => user.email === data.email && user.password === data.password,
+    // );
+    // if (!user) {
+    //   throw new Error('Email o password incorrectos');
+    // }
+    // return user;
   }
 }

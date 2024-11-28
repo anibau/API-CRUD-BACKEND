@@ -27,16 +27,16 @@ let UsersController = class UsersController {
         return this.usersService.getUserbyQueryParams(Number(page), Number(limit));
     }
     getUserbyId(id) {
-        return this.usersService.getUserbyId(Number(id));
+        return this.usersService.getUserbyId(id);
     }
     createUser(user) {
         return this.usersService.createUser(user);
     }
     updateUser(id, data) {
-        return this.usersService.updateUser(Number(id), data);
+        return this.usersService.updateUser(id, data);
     }
     deleteUser(id) {
-        return this.usersService.deleteUser(Number(id));
+        return this.usersService.deleteUser(id);
     }
 };
 exports.UsersController = UsersController;
@@ -52,7 +52,8 @@ __decorate([
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(200),
-    __param(0, (0, common_1.Query)()),
+    __param(0, (0, common_1.Query)('page')),
+    __param(1, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)

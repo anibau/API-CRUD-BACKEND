@@ -20,37 +20,16 @@ let ProductService = class ProductService {
         return this.productRepository.getProducts();
     }
     async getProductbyId(id) {
-        const products = await this.productRepository.getProducts();
-        const product = products.find((item) => item.id === id);
-        if (!product) {
-            throw new Error(`el producto ${id} no existe`);
-        }
-        return product;
+        return this.productRepository.getProductbyId(id);
     }
     async createProduct(body) {
-        const products = await this.productRepository.getProducts();
-        const id = products.length + 1;
-        products.push({ id, ...body });
-        return { id, ...body };
+        return this.productRepository.createProduct(body);
     }
     async updateProduct(id, data) {
-        const products = await this.productRepository.getProducts();
-        const product = products.find((item) => item.id === id);
-        if (!product) {
-            throw new Error(`el producto ${id} no existe`);
-        }
-        const { prop, dato } = data;
-        if (!(prop in product)) {
-            throw new Error(`la propiedad ${prop} no existe`);
-        }
-        product[prop] = dato;
-        return `producto con id ${id} actualizado exitosamente`;
+        return this.productRepository.updateProduct(id, data);
     }
     async deleteProduct(id) {
-        const products = await this.productRepository.getProducts();
-        const product = products.filter((user) => user.id !== id);
-        this.productRepository.setProduct(product);
-        return `el producto con id ${id} fue eliminado exitosamente`;
+        return this.productRepository.deleteProduct(id);
     }
 };
 exports.ProductService = ProductService;

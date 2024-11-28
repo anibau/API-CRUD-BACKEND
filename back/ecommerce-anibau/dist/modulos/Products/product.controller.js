@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsController = void 0;
 const common_1 = require("@nestjs/common");
 const product_service_1 = require("./product.service");
-const auth_guard_1 = require("../Auth/auth.guard");
 let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
@@ -24,29 +23,29 @@ let ProductsController = class ProductsController {
         return this.productsService.getProduct();
     }
     getProductbyId(id) {
-        return this.productsService.getProductbyId(Number(id));
+        return this.productsService.getProductbyId(id);
     }
-    createProduct(data) {
+    async createProduct(data) {
         return this.productsService.createProduct(data);
     }
     updateProduct(id, data) {
-        return this.productsService.updateProduct(Number(id), data);
+        return this.productsService.updateProduct(id, data);
     }
     deleteProduct(id) {
-        return this.productsService.deleteProduct(Number(id));
+        return this.productsService.deleteProduct(id);
     }
 };
 exports.ProductsController = ProductsController;
 __decorate([
     (0, common_1.Get)(),
-    (0, common_1.HttpCode)(200),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "getProducts", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, common_1.HttpCode)(200),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -54,17 +53,15 @@ __decorate([
 ], ProductsController.prototype, "getProductbyId", null);
 __decorate([
     (0, common_1.Post)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.HttpCode)(201),
+    (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "createProduct", null);
 __decorate([
     (0, common_1.Put)(':id'),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.HttpCode)(200),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -73,8 +70,7 @@ __decorate([
 ], ProductsController.prototype, "updateProduct", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.HttpCode)(200),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

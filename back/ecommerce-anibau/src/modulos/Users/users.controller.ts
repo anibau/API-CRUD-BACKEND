@@ -11,8 +11,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { Users } from './users.entity';
 import { AuthGuard } from '../Auth/auth.guard';
+import { Users } from './user.entity';
 
 @Controller('users')
 export class UsersController {
@@ -28,7 +28,7 @@ export class UsersController {
   @Get()
   @UseGuards(AuthGuard)
   @HttpCode(200)
-  getUserbyQuery(@Query() page: string = '2', limit: string = '5') {
+  getUserbyQuery(@Query('page') page: string = '2', @Query('limit') limit: string = '5') {
     return this.usersService.getUserbyQueryParams(Number(page), Number(limit));
   }
 
@@ -36,11 +36,11 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @HttpCode(200)
   getUserbyId(@Param('id') id: string) {
-    return this.usersService.getUserbyId(Number(id));
+    return this.usersService.getUserbyId(id);
   }
   @Post()
   @HttpCode(201)
-  createUser(@Body() user: Omit<Users, 'id'>) {
+  createUser(@Body() user: Partial<Users>) {
     return this.usersService.createUser(user);
   }
   @Put(':id')
@@ -48,14 +48,14 @@ export class UsersController {
   @HttpCode(200)
   updateUser(
     @Param('id') id: string,
-    @Body() data: { prop: string; dato: string },
+    @Body() data: Partial<Users>,
   ) {
-    return this.usersService.updateUser(Number(id), data);
+    return this.usersService.updateUser(id, data);
   }
   @Delete(':id')
   @UseGuards(AuthGuard)
   @HttpCode(200)
   deleteUser(@Param('id') id: string) {
-    return this.usersService.deleteUser(Number(id));
+    return this.usersService.deleteUser(id);
   }
 }

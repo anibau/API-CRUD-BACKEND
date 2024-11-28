@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ProductRepository } from './product.repository';
 import { Products } from './product.entity';
+import { ProductDto } from './product.dto';
 
 @Injectable()
 export class ProductService {
@@ -8,37 +9,20 @@ export class ProductService {
   getProduct() {
     return this.productRepository.getProducts();
   }
-  async getProductbyId(id: number) {
-    const products: Products[] = await this.productRepository.getProducts();
-    const product: Products = products.find((item) => item.id === id);
-    if (!product) {
-      throw new Error(`el producto ${id} no existe`);
-    }
-    return product;
+  async getProductbyId(id:string) {
+    return this.productRepository.getProductbyId(id)
   }
-  async createProduct(body: Omit<Products, 'id'>) {
-    const products: Products[] = await this.productRepository.getProducts();
-    const id = products.length + 1;
-    products.push({ id, ...body });
-    return { id, ...body };
+  async createProduct(body:ProductDto):Promise<Products> {
+    // const products: Products[] = await this.productRepository.getProducts();  : Omit<Products, 'id'>
+    // const id = products.length + 1;
+    // products.push({ id, ...body });
+    // return { id, ...body };
+    return this.productRepository.createProduct(body)
   }
-  async updateProduct(id: number, data: { prop: string; dato: string }) {
-    const products: Products[] = await this.productRepository.getProducts();
-    const product: Products = products.find((item) => item.id === id);
-    if (!product) {
-      throw new Error(`el producto ${id} no existe`);
-    }
-    const { prop, dato } = data;
-    if (!(prop in product)) {
-      throw new Error(`la propiedad ${prop} no existe`);
-    }
-    product[prop] = dato;
-    return `producto con id ${id} actualizado exitosamente`;
+  async updateProduct(id:string, data: Partial<ProductDto>) {
+    return this.productRepository.updateProduct(id, data);
   }
-  async deleteProduct(id: number) {
-    const products: Products[] = await this.productRepository.getProducts();
-    const product = products.filter((user) => user.id !== id);
-    this.productRepository.setProduct(product);
-    return `el producto con id ${id} fue eliminado exitosamente`;
+  async deleteProduct(id:string) {
+    return this.productRepository.deleteProduct(id)
   }
 }

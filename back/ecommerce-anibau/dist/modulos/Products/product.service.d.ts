@@ -1,21 +1,12 @@
 import { ProductRepository } from './product.repository';
 import { Products } from './product.entity';
+import { ProductDto } from './product.dto';
 export declare class ProductService {
     private productRepository;
     constructor(productRepository: ProductRepository);
     getProduct(): Promise<Products[]>;
-    getProductbyId(id: number): Promise<Products>;
-    createProduct(body: Omit<Products, 'id'>): Promise<{
-        name: string;
-        description: string;
-        price: number;
-        stock: boolean;
-        imgUrl: string;
-        id: number;
-    }>;
-    updateProduct(id: number, data: {
-        prop: string;
-        dato: string;
-    }): Promise<string>;
-    deleteProduct(id: number): Promise<string>;
+    getProductbyId(id: string): Promise<Products[]>;
+    createProduct(body: ProductDto): Promise<Products>;
+    updateProduct(id: string, data: Partial<ProductDto>): Promise<string>;
+    deleteProduct(id: string): Promise<string>;
 }
