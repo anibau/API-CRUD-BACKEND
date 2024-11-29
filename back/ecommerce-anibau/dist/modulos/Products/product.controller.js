@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsController = void 0;
 const common_1 = require("@nestjs/common");
 const product_service_1 = require("./product.service");
+const validateProduct_1 = require("../../Utils/validateProduct");
 let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
@@ -26,10 +27,20 @@ let ProductsController = class ProductsController {
         return this.productsService.getProductbyId(id);
     }
     async createProduct(data) {
-        return this.productsService.createProduct(data);
+        if ((0, validateProduct_1.validateProduct)(data)) {
+            return this.productsService.createProduct(data);
+        }
+        else {
+            throw new common_1.NotFoundException('Error: datos incompletos para la creacion de productos');
+        }
     }
     updateProduct(id, data) {
-        return this.productsService.updateProduct(id, data);
+        if ((0, validateProduct_1.validateProduct)(data)) {
+            return this.productsService.updateProduct(id, data);
+        }
+        else {
+            throw new common_1.NotFoundException('Error: datos incompletos para la actualizacion de producto');
+        }
     }
     deleteProduct(id) {
         return this.productsService.deleteProduct(id);
@@ -52,7 +63,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "getProductbyId", null);
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Post)('seeder'),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),

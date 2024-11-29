@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post } from "@nestjs/common";
 import { CategoriesService } from "./cetegories.service";
-//import { Categories } from "./categories.entity";
+import { Categories } from "./categories.entity";
 
 @Controller('categories')
 export class CategoriesController{
@@ -10,9 +10,9 @@ export class CategoriesController{
     getCategories(){
         return this.categoriesService.getCategories();
     }
-    @Post()
+    @Post('seeder')
     @HttpCode(HttpStatus.CREATED)
-    async addCategories(@Body() categorie){
+    async addCategories(@Body() categorie): Promise<Categories>{
         return this.categoriesService.addCategories(categorie)
     }
 }

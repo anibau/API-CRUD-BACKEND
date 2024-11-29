@@ -16,6 +16,8 @@ exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const auth_guard_1 = require("../Auth/auth.guard");
+const user_entity_1 = require("./user.entity");
+const validateUser_1 = require("../../Utils/validateUser");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -23,17 +25,27 @@ let UsersController = class UsersController {
     getUsers() {
         return this.usersService.getUsers();
     }
-    getUserbyQuery(page = '2', limit = '5') {
-        return this.usersService.getUserbyQueryParams(Number(page), Number(limit));
+    getUserbyQuery(page = 1, limit = 5) {
+        return this.usersService.getUserbyQueryParams(page, limit);
     }
     getUserbyId(id) {
         return this.usersService.getUserbyId(id);
     }
     createUser(user) {
-        return this.usersService.createUser(user);
+        if ((0, validateUser_1.validateUser)(user)) {
+            return this.usersService.createUser(user);
+        }
+        else {
+            throw new common_1.NotFoundException(`datos incompletos para crear: ${user.name}`);
+        }
     }
     updateUser(id, data) {
-        return this.usersService.updateUser(id, data);
+        if ((0, validateUser_1.validateUser)(data)) {
+            return this.usersService.updateUser(id, data);
+        }
+        else {
+            throw new common_1.NotFoundException(`datos incompletos para actualizar de ${data.name}`);
+        }
     }
     deleteUser(id) {
         return this.usersService.deleteUser(id);
@@ -55,7 +67,7 @@ __decorate([
     __param(0, (0, common_1.Query)('page')),
     __param(1, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUserbyQuery", null);
 __decorate([
@@ -72,8 +84,8 @@ __decorate([
     (0, common_1.HttpCode)(201),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [user_entity_1.Users]),
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "createUser", null);
 __decorate([
     (0, common_1.Put)(':id'),
@@ -82,7 +94,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, user_entity_1.Users]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "updateUser", null);
 __decorate([

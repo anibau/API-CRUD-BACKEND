@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpCode,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -13,6 +14,7 @@ import {
 import { UsersService } from './users.service';
 import { AuthGuard } from '../Auth/auth.guard';
 import { Users } from './user.entity';
+import { validateUser } from 'src/Utils/validateUser';
 
 @Controller('users')
 export class UsersController {
@@ -28,8 +30,8 @@ export class UsersController {
   @Get()
   @UseGuards(AuthGuard)
   @HttpCode(200)
-  getUserbyQuery(@Query('page') page: string = '2', @Query('limit') limit: string = '5') {
-    return this.usersService.getUserbyQueryParams(Number(page), Number(limit));
+  getUserbyQuery(@Query('page') page: number= 1, @Query('limit') limit: number = 5) {
+    return this.usersService.getUserbyQueryParams(page,limit);
   }
 
   @Get(':id')
@@ -40,17 +42,21 @@ export class UsersController {
   }
   @Post()
   @HttpCode(201)
-  createUser(@Body() user: Partial<Users>) {
-    return this.usersService.createUser(user);
+  createUser(@Body() user:Users): Promise<Users> {
+    if(validateUser(user)){
+      return this.usersService.createUser(user);
+    } else {throw new NotFoundException(`datos incompletos para crear: ${user.name}`)}
   }
   @Put(':id')
   @UseGuards(AuthGuard)
   @HttpCode(200)
   updateUser(
     @Param('id') id: string,
-    @Body() data: Partial<Users>,
+    @Body() data: Users,
   ) {
-    return this.usersService.updateUser(id, data);
+    if(validateUser(data)){
+      return this.usersService.updateUser(id, data);
+    } else{throw new NotFoundException(`datos incompletos para actualizar de ${data.name}`)}
   }
   @Delete(':id')
   @UseGuards(AuthGuard)

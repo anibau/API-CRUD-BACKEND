@@ -4,7 +4,7 @@ export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
     getUsers(): Promise<Users[]>;
-    getUserbyQuery(page?: string, limit?: string): Promise<Users[]>;
+    getUserbyQuery(page?: number, limit?: number): Promise<Users[]>;
     getUserbyId(id: string): Promise<{
         ordenes: {
             id: string;
@@ -18,7 +18,7 @@ export declare class UsersController {
         address: string;
         city: string;
     }>;
-    createUser(user: Partial<Users>): Promise<Users>;
-    updateUser(id: string, data: Partial<Users>): Promise<string>;
+    createUser(user: Users): Promise<Users>;
+    updateUser(id: string, data: Users): Promise<string>;
     deleteUser(id: string): Promise<string>;
 }

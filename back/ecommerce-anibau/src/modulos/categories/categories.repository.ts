@@ -14,7 +14,11 @@ export class CategoriesRepository{
           }
           return categories
     }
-    async addCategories(categorie: Partial<Categories>){
+    async addCategories(categorie: Partial<Categories>): Promise<Categories>{
+        const searchCategory= await this.categoriesRepository.findOne({where:{name: categorie.name}});
+        if(searchCategory){
+            throw new NotFoundException(`Error: la categoria ${categorie.name} ya existe`)
+        }
         const category=  this.categoriesRepository.create(categorie);
         return this.categoriesRepository.save(category)
     }

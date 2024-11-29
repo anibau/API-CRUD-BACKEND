@@ -62,7 +62,7 @@ let UsersRepository = class UsersRepository {
         await this.userRepository.remove(user);
         return `el usuario con id ${id} fue eliminado exitosamente`;
     }
-    async getUserbyQueries(page, limit) {
+    async getUserbyQueries(page = 1, limit = 5) {
         const initialIndex = (page - 1) * limit;
         const lastIndex = initialIndex + limit;
         const users = await this.userRepository.find();

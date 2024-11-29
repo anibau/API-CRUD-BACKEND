@@ -48,7 +48,7 @@ export class UsersRepository {
   //     city: 'lima',
   //   },
   // ];
-  async getUser() {
+  async getUser(): Promise<Users[]> {
     const users= await this.userRepository.find({relations:{orders:true}});
     if(!users.length){
       throw new NotFoundException('no se encontraron usuarios')
@@ -74,12 +74,12 @@ export class UsersRepository {
     return {...restUser, ordenes}    
    
   }
-  async createUser(user:Partial<Users>) {
+  async createUser(user:Users):Promise<Users> {
     const newUser= this.userRepository.create(user);
     await this.userRepository.save(newUser);
     return newUser
   }
-  async updateUser(id: string, dataUser){
+  async updateUser(id: string, dataUser: Users): Promise<string>{
     //buscar usuario por id
     const user= await this.userRepository.findOne({where:{id:id}, relations:{orders:true}});
     if(!user){
@@ -99,7 +99,7 @@ export class UsersRepository {
     return `el usuario con id ${id} fue eliminado exitosamente`
   }
   //solicitud GET con QUERY PARAMS Y PAGINACION
-  async getUserbyQueries(page: number, limit: number) {
+  async getUserbyQueries(page: number=1, limit: number=5) {
     const initialIndex = (page - 1) * limit;
     const lastIndex = initialIndex + limit;
     const users= await this.userRepository.find();

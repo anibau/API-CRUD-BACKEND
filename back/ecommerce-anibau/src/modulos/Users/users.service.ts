@@ -20,14 +20,14 @@ export class UsersService {
     return this.userRepository.getUserbyId(id)
   
   }
-  async createUser(body: Partial<Users>) {
+  async createUser(body: Users):Promise<Users> {
     // const users: Users[] = await this.userRepository.getUser();
     // const id = users.length + 1;
     // users.push({ id, ...body });
     // return { id, ...body };
     return this.userRepository.createUser(body)
   }
-  async updateUser(id: string, data: Partial<Users>) {
+  async updateUser(id: string, data: Users) {
     // const users: Users[] = await this.userRepository.getUser();
     // const user: Users = users.find((user) => user.id === id);
     // if (!user) {

@@ -29,6 +29,10 @@ let CategoriesRepository = class CategoriesRepository {
         return categories;
     }
     async addCategories(categorie) {
+        const searchCategory = await this.categoriesRepository.findOne({ where: { name: categorie.name } });
+        if (searchCategory) {
+            throw new common_1.NotFoundException(`Error: la categoria ${categorie.name} ya existe`);
+        }
         const category = this.categoriesRepository.create(categorie);
         return this.categoriesRepository.save(category);
     }

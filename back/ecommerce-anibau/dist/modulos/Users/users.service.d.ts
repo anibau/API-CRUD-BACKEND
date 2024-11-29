@@ -17,8 +17,8 @@ export declare class UsersService {
         address: string;
         city: string;
     }>;
-    createUser(body: Partial<Users>): Promise<Users>;
-    updateUser(id: string, data: Partial<Users>): Promise<string>;
+    createUser(body: Users): Promise<Users>;
+    updateUser(id: string, data: Users): Promise<string>;
     deleteUser(id: string): Promise<string>;
     getUserbyQueryParams(page: number, limit: number): Promise<Users[]>;
 }

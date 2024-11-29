@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -13,6 +14,8 @@ import {
 import { ProductService } from './product.service';
 //import { AuthGuard } from '../Auth/auth.guard';
 import { ProductDto } from './product.dto';
+import { Products } from './product.entity';
+import { validateProduct } from 'src/Utils/validateProduct';
 
 @Controller('products')
 export class ProductsController {
@@ -28,11 +31,13 @@ export class ProductsController {
   getProductbyId(@Param('id') id:string ) {
     return this.productsService.getProductbyId(id);
   }
-  @Post()
+  @Post('seeder')
   //@UseGuards(AuthGuard)
   @HttpCode(HttpStatus.CREATED)
-  async createProduct(@Body() data: ProductDto) {
-    return this.productsService.createProduct(data);
+  async createProduct(@Body() data: ProductDto): Promise<Products> {
+    if(validateProduct(data)){
+      return this.productsService.createProduct(data);
+    } else {throw new NotFoundException('Error: datos incompletos para la creacion de productos')}
   }
   @Put(':id')
   //@UseGuards(AuthGuard)
@@ -41,7 +46,11 @@ export class ProductsController {
     @Param('id') id:string,
     @Body() data:Partial<ProductDto>,
   ) {
-    return this.productsService.updateProduct(id, data);
+    if(validateProduct(data)){
+      return this.productsService.updateProduct(id, data);
+    } else{
+      throw new NotFoundException('Error: datos incompletos para la actualizacion de producto')
+    }
   }
   @Delete(':id')
   //@UseGuards(AuthGuard)

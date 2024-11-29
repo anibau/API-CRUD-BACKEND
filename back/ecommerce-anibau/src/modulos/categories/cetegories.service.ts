@@ -8,7 +8,7 @@ export class CategoriesService{
     async getCategories(){
         return this.categoriesRepository.getCategories()
     }
-    async addCategories(categorie: Partial<Categories>){
+    async addCategories(categorie: Partial<Categories>): Promise<Categories>{
         return this.categoriesRepository.addCategories(categorie)
     }
 }

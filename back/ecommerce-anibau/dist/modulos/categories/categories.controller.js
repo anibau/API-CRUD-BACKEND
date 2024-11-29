@@ -35,7 +35,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CategoriesController.prototype, "getCategories", null);
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Post)('seeder'),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),

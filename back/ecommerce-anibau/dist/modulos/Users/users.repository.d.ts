@@ -17,8 +17,8 @@ export declare class UsersRepository {
         address: string;
         city: string;
     }>;
-    createUser(user: Partial<Users>): Promise<Users>;
-    updateUser(id: string, dataUser: any): Promise<string>;
+    createUser(user: Users): Promise<Users>;
+    updateUser(id: string, dataUser: Users): Promise<string>;
     deleteUser(id: string): Promise<string>;
-    getUserbyQueries(page: number, limit: number): Promise<Users[]>;
+    getUserbyQueries(page?: number, limit?: number): Promise<Users[]>;
 }

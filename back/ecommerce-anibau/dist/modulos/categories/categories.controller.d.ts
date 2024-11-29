@@ -1,7 +1,8 @@
 import { CategoriesService } from "./cetegories.service";
+import { Categories } from "./categories.entity";
 export declare class CategoriesController {
     private readonly categoriesService;
     constructor(categoriesService: CategoriesService);
-    getCategories(): Promise<import("./categories.entity").Categories[]>;
-    addCategories(categorie: any): Promise<import("./categories.entity").Categories>;
+    getCategories(): Promise<Categories[]>;
+    addCategories(categorie: any): Promise<Categories>;
 }
