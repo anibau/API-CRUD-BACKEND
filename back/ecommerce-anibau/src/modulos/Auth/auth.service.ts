@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from '../Users/user.entity';
 import { Repository } from 'typeorm';
+import { LoginUserDto } from './LoginUserDto';
 
 @Injectable()
 export class AuthService {
@@ -9,7 +10,7 @@ export class AuthService {
   getAuth() {
     return 'get Auths';
   }
-  async getLogin(data: { email: string; password: string }) {
+  async getLogin(data:LoginUserDto):Promise<Users> {
     const user:Users = await this.usersRepository.findOne({where:{email: data.email, password:data.password }});
     if(!user){
       throw new NotFoundException(`Email o password incorrectos`)

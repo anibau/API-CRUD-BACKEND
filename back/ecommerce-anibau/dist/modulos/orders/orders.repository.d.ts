@@ -3,6 +3,7 @@ import { Repository } from "typeorm";
 import { Users } from "../Users/user.entity";
 import { OrderDetails } from "../orderDetails/orderDetail.entity";
 import { Products } from "../Products/product.entity";
+import { CreateOrderDto } from "./CreateOrderDto";
 export declare class OrderRepository {
     private orderRepository;
     private userRepository;
@@ -11,5 +12,5 @@ export declare class OrderRepository {
     constructor(orderRepository: Repository<Orders>, userRepository: Repository<Users>, orderDetailRepository: Repository<OrderDetails>, productRepository: Repository<Products>);
     getOrderAll(): Promise<Orders[]>;
     getOrder(id: string): Promise<Orders>;
-    addOrder(data: Partial<Orders>, dataDetail: Partial<OrderDetails>): Promise<Orders>;
+    addOrder(data: CreateOrderDto): Promise<Orders>;
 }

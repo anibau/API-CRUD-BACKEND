@@ -15,18 +15,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrdesController = void 0;
 const common_1 = require("@nestjs/common");
 const orders_service_1 = require("./orders.service");
+const CreateOrderDto_1 = require("./CreateOrderDto");
 let OrdesController = class OrdesController {
     constructor(orderService) {
         this.orderService = orderService;
     }
     async getOrderall() {
-        return this.orderService.getOrderall();
+        try {
+            return this.orderService.getOrderall();
+        }
+        catch {
+            throw new common_1.BadRequestException('Error al obtener las ordenes');
+        }
     }
     async getOrder(id) {
-        return this.orderService.getOrder(id);
+        try {
+            return this.orderService.getOrder(id);
+        }
+        catch {
+            throw new common_1.BadRequestException(`Error al obtener la orden por id ${id}`);
+        }
     }
-    async addOrder(data, dataDetail) {
-        return this.orderService.addOrder(data, dataDetail);
+    async addOrder(data) {
+        try {
+            return this.orderService.addOrder(data);
+        }
+        catch {
+            throw new common_1.BadRequestException(`Error al crear la orden`);
+        }
     }
 };
 exports.OrdesController = OrdesController;
@@ -40,7 +56,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)(':id'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
@@ -49,9 +65,8 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [CreateOrderDto_1.CreateOrderDto]),
     __metadata("design:returntype", Promise)
 ], OrdesController.prototype, "addOrder", null);
 exports.OrdesController = OrdesController = __decorate([

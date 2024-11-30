@@ -1,2 +1,2 @@
-import { Users } from "src/modulos/Users/user.entity";
-export declare function validateUser(data: Users): boolean;
+import { CreateUserDto } from "src/modulos/Users/CreateUserDto";
+export declare function validateUser(data: CreateUserDto): boolean;

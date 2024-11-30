@@ -1,6 +1,6 @@
-import { Users } from "src/modulos/Users/user.entity";
+import { CreateUserDto } from "src/modulos/Users/CreateUserDto";
 
-export function validateUser(data: Users):boolean{
+export function validateUser(data:CreateUserDto):boolean{
     const validateU= 
     data.name !== undefined &&
     data.email !== undefined &&

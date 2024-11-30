@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post } from "@nestjs/common";
 import { OrderDetailService } from "./orderDetail.service";
 import { OrderDetails } from "./orderDetail.entity";
 
@@ -9,18 +9,29 @@ export class OrderDetailController{
     @Get()
     @HttpCode(HttpStatus.OK)
     async getAll(){
-        //return 'endpoint orderdetail'
-       return this.orderDetailService.getAll()
+        try{
+            return this.orderDetailService.getAll()
+        }catch{
+            throw new BadRequestException('Error al obtener los detalles de ordenes')
+        }
     }
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async getbyId(@Param('id') id:string){
-        return this.orderDetailService.getbyId(id)
+    async getbyId(@Param('id', ParseUUIDPipe) id:string){
+        try{
+            return this.orderDetailService.getbyId(id)
+        }catch{
+            throw new BadRequestException(`Error al obtener el detalle de orden por id ${id}`)
+        }
     }
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
     async addDetail(@Body() data: Partial<OrderDetails>){
-        return this.orderDetailService.addDetail(data)
+        try{
+            return this.orderDetailService.addDetail(data)
+        }catch{
+            throw new BadRequestException('Error al crear el detalle de orden')
+        }
     }
 }

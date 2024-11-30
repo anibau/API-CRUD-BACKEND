@@ -1,7 +1,6 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post } from "@nestjs/common";
 import { OrdersService } from "./orders.service";
-import { Orders } from "./orders.entity";
-import { OrderDetails } from "../orderDetails/orderDetail.entity";
+import { CreateOrderDto } from "./CreateOrderDto";
 
 @Controller('orders')
 export class OrdesController {
@@ -10,17 +9,29 @@ export class OrdesController {
     @Get()
     @HttpCode(HttpStatus.OK)
     async getOrderall(){
-        return this.orderService.getOrderall()
+        try{
+            return this.orderService.getOrderall()
+        }catch{
+            throw new BadRequestException('Error al obtener las ordenes')
+        }
     }
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async getOrder(@Param('id') id:string){
-        return this.orderService.getOrder(id)
+    async getOrder(@Param('id', ParseUUIDPipe) id:string){
+        try{
+            return this.orderService.getOrder(id)
+        }catch{
+            throw new BadRequestException(`Error al obtener la orden por id ${id}`)
+        }
     }
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async addOrder(@Body() data: Partial<Orders>, @Body() dataDetail: Partial<OrderDetails>){
-        return this.orderService.addOrder(data, dataDetail)
+    async addOrder(@Body() data: CreateOrderDto){
+        try{
+            return this.orderService.addOrder(data)
+        }catch{
+            throw new BadRequestException(`Error al crear la orden`)
+        }
     }
 
 }

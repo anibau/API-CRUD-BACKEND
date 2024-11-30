@@ -1,12 +1,12 @@
 import { ProductService } from './product.service';
-import { ProductDto } from './product.dto';
 import { Products } from './product.entity';
+import { ProductDto } from './productDto';
 export declare class ProductsController {
     private readonly productsService;
     constructor(productsService: ProductService);
     getProducts(): Promise<Products[]>;
     getProductbyId(id: string): Promise<Products[]>;
     createProduct(data: ProductDto): Promise<Products>;
-    updateProduct(id: string, data: Partial<ProductDto>): Promise<string>;
+    updateProduct(id: string, data: ProductDto): Promise<string>;
     deleteProduct(id: string): Promise<string>;
 }

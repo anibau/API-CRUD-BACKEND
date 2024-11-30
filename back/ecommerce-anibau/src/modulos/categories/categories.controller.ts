@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Post } from "@nestjs/common";
 import { CategoriesService } from "./cetegories.service";
 import { Categories } from "./categories.entity";
 
@@ -8,11 +8,20 @@ export class CategoriesController{
     @Get()
     @HttpCode(HttpStatus.OK)
     getCategories(){
-        return this.categoriesService.getCategories();
+        try{
+            return this.categoriesService.getCategories();
+        }catch{
+            throw new BadRequestException('Error al obtener las categorias')
+        }
     }
     @Post('seeder')
     @HttpCode(HttpStatus.CREATED)
     async addCategories(@Body() categorie): Promise<Categories>{
-        return this.categoriesService.addCategories(categorie)
+        try{
+            return this.categoriesService.addCategories(categorie)
+        }catch{
+            throw new BadRequestException('Error al crear la categoria')
+
+        }
     }
 }

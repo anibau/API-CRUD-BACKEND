@@ -20,10 +20,20 @@ let CategoriesController = class CategoriesController {
         this.categoriesService = categoriesService;
     }
     getCategories() {
-        return this.categoriesService.getCategories();
+        try {
+            return this.categoriesService.getCategories();
+        }
+        catch {
+            throw new common_1.BadRequestException('Error al obtener las categorias');
+        }
     }
     async addCategories(categorie) {
-        return this.categoriesService.addCategories(categorie);
+        try {
+            return this.categoriesService.addCategories(categorie);
+        }
+        catch {
+            throw new common_1.BadRequestException('Error al crear la categoria');
+        }
     }
 };
 exports.CategoriesController = CategoriesController;

@@ -1,5 +1,6 @@
 import { UsersService } from './users.service';
 import { Users } from './user.entity';
+import { CreateUserDto } from './CreateUserDto';
 export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
@@ -18,7 +19,7 @@ export declare class UsersController {
         address: string;
         city: string;
     }>;
-    createUser(user: Users): Promise<Users>;
-    updateUser(id: string, data: Users): Promise<string>;
+    createUser(user: CreateUserDto): Promise<Users>;
+    updateUser(id: string, data: CreateUserDto): Promise<string>;
     deleteUser(id: string): Promise<string>;
 }

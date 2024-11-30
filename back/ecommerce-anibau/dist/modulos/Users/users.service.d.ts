@@ -1,5 +1,6 @@
 import { UsersRepository } from './users.repository';
 import { Users } from './user.entity';
+import { CreateUserDto } from './CreateUserDto';
 export declare class UsersService {
     private userRepository;
     constructor(userRepository: UsersRepository);
@@ -17,8 +18,8 @@ export declare class UsersService {
         address: string;
         city: string;
     }>;
-    createUser(body: Users): Promise<Users>;
-    updateUser(id: string, data: Users): Promise<string>;
+    createUser(body: CreateUserDto): Promise<Users>;
+    updateUser(id: string, data: CreateUserDto): Promise<string>;
     deleteUser(id: string): Promise<string>;
     getUserbyQueryParams(page: number, limit: number): Promise<Users[]>;
 }

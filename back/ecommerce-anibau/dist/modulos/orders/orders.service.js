@@ -22,8 +22,8 @@ let OrdersService = class OrdersService {
     async getOrderall() {
         return this.orderRepository.getOrderAll();
     }
-    async addOrder(data, dataDetail) {
-        return this.orderRepository.addOrder(data, dataDetail);
+    async addOrder(data) {
+        return this.orderRepository.addOrder(data);
     }
 };
 exports.OrdersService = OrdersService;

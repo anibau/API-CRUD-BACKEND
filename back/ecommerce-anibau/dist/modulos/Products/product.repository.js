@@ -53,7 +53,7 @@ let ProductRepository = class ProductRepository {
         }
         const newProduct = this.productRepository.create({ ...restProduct, category });
         if (!newProduct) {
-            throw new common_1.NotFoundException('error al crear el producto');
+            throw new common_1.BadRequestException('error al crear el producto');
         }
         await this.productRepository.save(newProduct);
         return newProduct;

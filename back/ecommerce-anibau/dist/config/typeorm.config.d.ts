@@ -12,7 +12,7 @@ declare const _default: (() => {
     username: string;
     password: string;
     autoLoadEntities: boolean;
-    entities: (typeof Categories | typeof Products | typeof OrderDetails | typeof Orders | typeof Users)[];
+    entities: (typeof Users | typeof Products | typeof Categories | typeof Orders | typeof OrderDetails)[];
     synchronize: boolean;
 }) & import("@nestjs/config").ConfigFactoryKeyHost<{
     type: string;
@@ -22,7 +22,7 @@ declare const _default: (() => {
     username: string;
     password: string;
     autoLoadEntities: boolean;
-    entities: (typeof Categories | typeof Products | typeof OrderDetails | typeof Orders | typeof Users)[];
+    entities: (typeof Users | typeof Products | typeof Categories | typeof Orders | typeof OrderDetails)[];
     synchronize: boolean;
 }>;
 export default _default;

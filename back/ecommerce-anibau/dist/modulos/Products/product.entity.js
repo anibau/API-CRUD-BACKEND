@@ -13,11 +13,13 @@ exports.Products = void 0;
 const typeorm_1 = require("typeorm");
 const categories_entity_1 = require("../categories/categories.entity");
 const orderDetail_entity_1 = require("../orderDetails/orderDetail.entity");
+const class_validator_1 = require("class-validator");
 let Products = class Products {
 };
 exports.Products = Products;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
+    (0, class_validator_1.IsUUID)(),
     __metadata("design:type", String)
 ], Products.prototype, "id", void 0);
 __decorate([

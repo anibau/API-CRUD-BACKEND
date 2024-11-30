@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -7,15 +8,16 @@ import {
   HttpStatus,
   NotFoundException,
   Param,
+  ParseUUIDPipe,
   Post,
   Put,
- // UseGuards,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
-//import { AuthGuard } from '../Auth/auth.guard';
-import { ProductDto } from './product.dto';
+import { AuthGuard } from '../Auth/auth.guard';
 import { Products } from './product.entity';
 import { validateProduct } from 'src/Utils/validateProduct';
+import { ProductDto } from './productDto';
 
 @Controller('products')
 export class ProductsController {
@@ -24,38 +26,58 @@ export class ProductsController {
   @Get()
   @HttpCode(HttpStatus.OK)
   getProducts() {
-    return this.productsService.getProduct();
+    try{
+      return this.productsService.getProduct();
+    } catch{
+      throw new BadRequestException('Error al obtener los products')
+    }
   }
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  getProductbyId(@Param('id') id:string ) {
-    return this.productsService.getProductbyId(id);
+  getProductbyId(@Param('id', ParseUUIDPipe) id:string ) {
+    try{
+      return this.productsService.getProductbyId(id);
+    }catch{
+      throw new BadRequestException('Error al obtener el products por id '+id)
+    }
   }
   @Post('seeder')
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.CREATED)
   async createProduct(@Body() data: ProductDto): Promise<Products> {
-    if(validateProduct(data)){
-      return this.productsService.createProduct(data);
-    } else {throw new NotFoundException('Error: datos incompletos para la creacion de productos')}
+    try{
+      if(validateProduct(data)){
+        return this.productsService.createProduct(data);
+      } else {throw new NotFoundException('Error: datos incompletos para la creacion de productos')}
+    }  catch{
+      throw new BadRequestException('Error al crear el producto')
+    }
   }
   @Put(':id')
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   updateProduct(
-    @Param('id') id:string,
-    @Body() data:Partial<ProductDto>,
+    @Param('id', ParseUUIDPipe) id:string,
+    @Body() data:ProductDto,
   ) {
-    if(validateProduct(data)){
-      return this.productsService.updateProduct(id, data);
-    } else{
-      throw new NotFoundException('Error: datos incompletos para la actualizacion de producto')
+    try{
+      if(validateProduct(data)){
+        return this.productsService.updateProduct(id, data);
+      } else{
+        throw new NotFoundException('Error: datos incompletos para la actualizacion de producto')
+      }
+    }catch{
+      throw new BadRequestException('Error al actualizar el producto por id '+id)
     }
   }
   @Delete(':id')
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  deleteProduct(@Param('id') id:string) {
-    return this.productsService.deleteProduct(id);
+  deleteProduct(@Param('id', ParseUUIDPipe) id:string) {
+    try{
+      return this.productsService.deleteProduct(id);
+    }catch{
+      throw new BadRequestException('Error al eliminar el products por id '+id)
+    }
   }
 }

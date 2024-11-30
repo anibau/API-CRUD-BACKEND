@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 import { Users } from "../Users/user.entity";
 import { OrderDetails } from "../orderDetails/orderDetail.entity";
 import { Products } from "../Products/product.entity";
+import { CreateOrderDto } from "./CreateOrderDto";
 
 @Injectable()
 export class OrderRepository{
@@ -15,7 +16,7 @@ export class OrderRepository{
 
     
     async getOrderAll(){
-        const orders= await this.orderRepository.find({relations:{ user: true, orderDetails:true}});
+        const orders= await this.orderRepository.find({relations:{ user: true, orderDetails:{products:true}}});
         if(!orders.length){
            throw new NotFoundException('no se encontraron Ordenes con usuarios asociados')
         };
@@ -29,14 +30,15 @@ export class OrderRepository{
     };
     return orders
 }
-    async addOrder(data: Partial<Orders>, dataDetail: Partial<OrderDetails>){
+    async addOrder(data:CreateOrderDto){
         //1. busca el uuario por  id
-        const user= await this.userRepository.findOne({where:{id:data.user as unknown as string}});
+        const user= await this.userRepository.findOne({where:{id:data.userId as unknown as string}});
         if(!user){
-            throw new NotFoundException(`usuario con id ${data.user} no encontrado`)
+            throw new NotFoundException(`usuario con id ${data.userId} no encontrado`)
         }
         //2.- buscamos los productos y verificamos que haya stock
-        const productsId= dataDetail.products as unknown as string[];
+        const productsId= data.products.map((product)=>product.id);
+
         const products= await Promise.all(
             productsId.map(async(productId)=>{
                 const product= await this.productRepository.findOne({where:{id: productId}});
@@ -53,13 +55,17 @@ export class OrderRepository{
             product.stock-=1;
             await this.productRepository.save(product)
         }
-       // 4. Crear el detalle de la orden
-        const orderDetail=  this.orderDetailRepository.create({...dataDetail, price:priceTotal, products});
+        
+        // 5. Crear el detalle de la orden
+        const orderDetail=  this.orderDetailRepository.create({price:priceTotal, products});
         await this.orderDetailRepository.save(orderDetail);
-        // 5. Crear la orden
-        const newOrder=  this.orderRepository.create({...data, user ,orderDetails: orderDetail});
+        
+        //4. creamos la fecha
+        const date= new Date();
+        // 6. Crear la orden
+        const newOrder=  this.orderRepository.create({...data, date, user ,orderDetails: orderDetail});
         await this.orderRepository.save(newOrder);
-        // 6. Retornar la orden con los detalles y productos
+        // 7. Retornar la orden con los detalles y productos
         return this.orderRepository.findOne({where: {id: newOrder.id}, relations:{user:true, orderDetails:{products:true}}});
     }
 }

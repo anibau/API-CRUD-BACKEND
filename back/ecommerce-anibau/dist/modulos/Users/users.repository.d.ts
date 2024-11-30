@@ -1,5 +1,6 @@
 import { Users } from './user.entity';
 import { Repository } from 'typeorm';
+import { CreateUserDto } from './CreateUserDto';
 export declare class UsersRepository {
     private userRepository;
     constructor(userRepository: Repository<Users>);
@@ -17,8 +18,8 @@ export declare class UsersRepository {
         address: string;
         city: string;
     }>;
-    createUser(user: Users): Promise<Users>;
-    updateUser(id: string, dataUser: Users): Promise<string>;
+    createUser(user: CreateUserDto): Promise<Users>;
+    updateUser(id: string, dataUser: CreateUserDto): Promise<string>;
     deleteUser(id: string): Promise<string>;
     getUserbyQueries(page?: number, limit?: number): Promise<Users[]>;
 }

@@ -20,13 +20,28 @@ let OrderDetailController = class OrderDetailController {
         this.orderDetailService = orderDetailService;
     }
     async getAll() {
-        return this.orderDetailService.getAll();
+        try {
+            return this.orderDetailService.getAll();
+        }
+        catch {
+            throw new common_1.BadRequestException('Error al obtener los detalles de ordenes');
+        }
     }
     async getbyId(id) {
-        return this.orderDetailService.getbyId(id);
+        try {
+            return this.orderDetailService.getbyId(id);
+        }
+        catch {
+            throw new common_1.BadRequestException(`Error al obtener el detalle de orden por id ${id}`);
+        }
     }
     async addDetail(data) {
-        return this.orderDetailService.addDetail(data);
+        try {
+            return this.orderDetailService.addDetail(data);
+        }
+        catch {
+            throw new common_1.BadRequestException('Error al crear el detalle de orden');
+        }
     }
 };
 exports.OrderDetailController = OrderDetailController;
@@ -40,7 +55,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)(':id'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)

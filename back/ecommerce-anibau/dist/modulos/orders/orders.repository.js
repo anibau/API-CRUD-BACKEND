@@ -28,7 +28,7 @@ let OrderRepository = class OrderRepository {
         this.productRepository = productRepository;
     }
     async getOrderAll() {
-        const orders = await this.orderRepository.find({ relations: { user: true, orderDetails: true } });
+        const orders = await this.orderRepository.find({ relations: { user: true, orderDetails: { products: true } } });
         if (!orders.length) {
             throw new common_1.NotFoundException('no se encontraron Ordenes con usuarios asociados');
         }
@@ -43,12 +43,12 @@ let OrderRepository = class OrderRepository {
         ;
         return orders;
     }
-    async addOrder(data, dataDetail) {
-        const user = await this.userRepository.findOne({ where: { id: data.user } });
+    async addOrder(data) {
+        const user = await this.userRepository.findOne({ where: { id: data.userId } });
         if (!user) {
-            throw new common_1.NotFoundException(`usuario con id ${data.user} no encontrado`);
+            throw new common_1.NotFoundException(`usuario con id ${data.userId} no encontrado`);
         }
-        const productsId = dataDetail.products;
+        const productsId = data.products.map((product) => product.id);
         const products = await Promise.all(productsId.map(async (productId) => {
             const product = await this.productRepository.findOne({ where: { id: productId } });
             if (!product || product.stock <= 0) {
@@ -63,9 +63,10 @@ let OrderRepository = class OrderRepository {
             product.stock -= 1;
             await this.productRepository.save(product);
         }
-        const orderDetail = this.orderDetailRepository.create({ ...dataDetail, price: priceTotal, products });
+        const orderDetail = this.orderDetailRepository.create({ price: priceTotal, products });
         await this.orderDetailRepository.save(orderDetail);
-        const newOrder = this.orderRepository.create({ ...data, user, orderDetails: orderDetail });
+        const date = new Date();
+        const newOrder = this.orderRepository.create({ ...data, date, user, orderDetails: orderDetail });
         await this.orderRepository.save(newOrder);
         return this.orderRepository.findOne({ where: { id: newOrder.id }, relations: { user: true, orderDetails: { products: true } } });
     }

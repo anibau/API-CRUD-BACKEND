@@ -1,9 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Products } from './product.entity';
 import { Repository } from 'typeorm';
 import { Categories } from '../categories/categories.entity';
-import { ProductDto } from './product.dto';
+import { ProductDto } from './productDto';
 
 @Injectable()
 export class ProductRepository {
@@ -58,7 +58,7 @@ export class ProductRepository {
     }
     return product
   }
-  async createProduct(product:ProductDto):Promise<Products> {
+  async createProduct(product: ProductDto):Promise<Products> {
     //desestructur para obtener category 
     const {categories: categName, ...restProduct}= product;
     if (!categName) {
@@ -77,12 +77,12 @@ export class ProductRepository {
     }
     const newProduct=  this.productRepository.create({...restProduct, category});
     if(!newProduct){
-      throw new NotFoundException('error al crear el producto')
+      throw new BadRequestException('error al crear el producto')
     }
     await this.productRepository.save(newProduct)
     return newProduct
   }
-  async updateProduct(id:string, data:Partial<ProductDto>){
+  async updateProduct(id:string, data:ProductDto){
     //busqueda de producto por id
     const product= await this.productRepository.findOne({where:{id:id}, relations:{category:true}});
     if (!product) {
