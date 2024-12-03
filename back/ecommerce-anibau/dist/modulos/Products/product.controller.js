@@ -30,6 +30,9 @@ let ProductsController = class ProductsController {
             throw new common_1.BadRequestException('Error al obtener los products');
         }
     }
+    async addProductJSON() {
+        return this.productsService.addProductJSON();
+    }
     getProductbyId(id) {
         try {
             return this.productsService.getProductbyId(id);
@@ -82,6 +85,12 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "getProducts", null);
 __decorate([
+    (0, common_1.Get)('seeder'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductsController.prototype, "addProductJSON", null);
+__decorate([
     (0, common_1.Get)(':id'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
@@ -90,7 +99,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "getProductbyId", null);
 __decorate([
-    (0, common_1.Post)('seeder'),
+    (0, common_1.Post)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.Body)()),

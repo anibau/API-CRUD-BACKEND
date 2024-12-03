@@ -19,6 +19,9 @@ let ProductService = class ProductService {
     getProduct() {
         return this.productRepository.getProducts();
     }
+    async addProductJSON() {
+        return this.productRepository.addProductJSON();
+    }
     async getProductbyId(id) {
         return this.productRepository.getProductbyId(id);
     }

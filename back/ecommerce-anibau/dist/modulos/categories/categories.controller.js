@@ -14,18 +14,21 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoriesController = void 0;
 const common_1 = require("@nestjs/common");
-const cetegories_service_1 = require("./cetegories.service");
+const categories_service_1 = require("./categories.service");
 let CategoriesController = class CategoriesController {
     constructor(categoriesService) {
         this.categoriesService = categoriesService;
     }
-    getCategories() {
+    async getCategories() {
         try {
             return this.categoriesService.getCategories();
         }
         catch {
             throw new common_1.BadRequestException('Error al obtener las categorias');
         }
+    }
+    async addCategoryJSON() {
+        return this.categoriesService.addCategoriesJSON();
     }
     async addCategories(categorie) {
         try {
@@ -42,10 +45,17 @@ __decorate([
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], CategoriesController.prototype, "getCategories", null);
 __decorate([
-    (0, common_1.Post)('seeder'),
+    (0, common_1.Get)('seeder'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], CategoriesController.prototype, "addCategoryJSON", null);
+__decorate([
+    (0, common_1.Post)(),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -54,6 +64,6 @@ __decorate([
 ], CategoriesController.prototype, "addCategories", null);
 exports.CategoriesController = CategoriesController = __decorate([
     (0, common_1.Controller)('categories'),
-    __metadata("design:paramtypes", [cetegories_service_1.CategoriesService])
+    __metadata("design:paramtypes", [categories_service_1.CategoriesService])
 ], CategoriesController);
 //# sourceMappingURL=categories.controller.js.map

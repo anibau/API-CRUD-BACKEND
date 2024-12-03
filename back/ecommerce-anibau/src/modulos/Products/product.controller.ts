@@ -32,6 +32,13 @@ export class ProductsController {
       throw new BadRequestException('Error al obtener los products')
     }
   }
+
+  @Get('seeder')
+  async addProductJSON(){
+    return this.productsService.addProductJSON()
+  }
+
+
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   getProductbyId(@Param('id', ParseUUIDPipe) id:string ) {
@@ -41,7 +48,7 @@ export class ProductsController {
       throw new BadRequestException('Error al obtener el products por id '+id)
     }
   }
-  @Post('seeder')
+  @Post()
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.CREATED)
   async createProduct(@Body() data: ProductDto): Promise<Products> {

@@ -9,6 +9,11 @@ export class ProductService {
   getProduct() {
     return this.productRepository.getProducts();
   }
+
+  async addProductJSON(){
+    return this.productRepository.addProductJSON()
+  }
+
   async getProductbyId(id:string) {
     return this.productRepository.getProductbyId(id)
   }

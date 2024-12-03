@@ -19,6 +19,9 @@ let CategoriesService = class CategoriesService {
     async getCategories() {
         return this.categoriesRepository.getCategories();
     }
+    async addCategoriesJSON() {
+        return this.categoriesRepository.addCategoryJSON();
+    }
     async addCategories(categorie) {
         return this.categoriesRepository.addCategories(categorie);
     }
@@ -28,4 +31,4 @@ exports.CategoriesService = CategoriesService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [categories_repository_1.CategoriesRepository])
 ], CategoriesService);
-//# sourceMappingURL=cetegories.service.js.map
+//# sourceMappingURL=categories.service.js.map

@@ -8,6 +8,7 @@ import typeormConfig from './config/typeorm.config';
 import { CategoriesModule } from './modulos/categories/categories.module';
 import { OrderDetailModule } from './modulos/orderDetails/orderDetail.module';
 import { OrdersModule } from './modulos/orders/orders.module';
+import { FilesModule } from './modulos/files/files.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { OrdersModule } from './modulos/orders/orders.module';
     CategoriesModule,
     OrderDetailModule,
     OrdersModule,
+    FilesModule
   ],
   controllers: [],
   providers: [],

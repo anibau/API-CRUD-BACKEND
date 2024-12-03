@@ -4,51 +4,34 @@ import { Products } from './product.entity';
 import { Repository } from 'typeorm';
 import { Categories } from '../categories/categories.entity';
 import { ProductDto } from './productDto';
+import * as data from '../../Utils/data.json'
 
 @Injectable()
 export class ProductRepository {
   constructor(@InjectRepository(Products) private productRepository: Repository<Products>,
   @InjectRepository(Categories) private categoriesRepository: Repository <Categories>
 ){}
-  // private Products: Products[] = [
-  //   {
-  //     id: 1,
-  //     name: 'camisa',
-  //     description: 'ropa de hombre',
-  //     price: 20,
-  //     stock: true,
-  //     imgUrl: 'string',
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'polo',
-  //     description: 'ropa de hombre',
-  //     price: 20,
-  //     stock: true,
-  //     imgUrl: 'string',
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'vestido',
-  //     description: 'ropa de hombre',
-  //     price: 20,
-  //     stock: true,
-  //     imgUrl: 'string',
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'short',
-  //     description: 'ropa de hombre',
-  //     price: 20,
-  //     stock: true,
-  //     imgUrl: 'string',
-  //   },
-  // ];
   async getProducts() {
     return this.productRepository.find({relations: {
       category:true
     }});
   }
+
+  async addProductJSON(){
+    for(const obj of data){
+      const product= await this.productRepository.findOne({where:{name: obj.name}});
+      if(!product){
+        let category= await this.categoriesRepository.findOne({where:{name:obj.categories}});
+        if(!category){
+          category= this.categoriesRepository.create({name:obj.categories});
+          await this.categoriesRepository.save(category)
+        }
+        const newProduct= this.productRepository.create({...obj, category});
+        await this.productRepository.save(newProduct)
+      }
+    }; return 'productos cargados'
+  }
+
   async getProductbyId(id:string){
     const product= await this.productRepository.find({
       where:{id: id}, relations: {category:true}

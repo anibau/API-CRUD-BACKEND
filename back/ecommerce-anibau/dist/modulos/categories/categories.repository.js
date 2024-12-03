@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const categories_entity_1 = require("./categories.entity");
 const typeorm_2 = require("typeorm");
+const data = require("../../Utils/data.json");
 let CategoriesRepository = class CategoriesRepository {
     constructor(categoriesRepository) {
         this.categoriesRepository = categoriesRepository;
@@ -27,6 +28,17 @@ let CategoriesRepository = class CategoriesRepository {
             throw new common_1.NotFoundException("No se encontraron categorías con productos asociados.");
         }
         return categories;
+    }
+    async addCategoryJSON() {
+        for (const obj of data) {
+            const category = await this.categoriesRepository.findOne({ where: { name: obj.categories } });
+            if (!category) {
+                const newCategory = this.categoriesRepository.create({ name: obj.categories });
+                await this.categoriesRepository.save(newCategory);
+            }
+        }
+        ;
+        return 'las categorias fueron agregadas';
     }
     async addCategories(categorie) {
         const searchCategory = await this.categoriesRepository.findOne({ where: { name: categorie.name } });

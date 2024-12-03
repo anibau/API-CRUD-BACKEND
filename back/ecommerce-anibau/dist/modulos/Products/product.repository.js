@@ -18,6 +18,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const product_entity_1 = require("./product.entity");
 const typeorm_2 = require("typeorm");
 const categories_entity_1 = require("../categories/categories.entity");
+const data = require("../../Utils/data.json");
 let ProductRepository = class ProductRepository {
     constructor(productRepository, categoriesRepository) {
         this.productRepository = productRepository;
@@ -27,6 +28,22 @@ let ProductRepository = class ProductRepository {
         return this.productRepository.find({ relations: {
                 category: true
             } });
+    }
+    async addProductJSON() {
+        for (const obj of data) {
+            const product = await this.productRepository.findOne({ where: { name: obj.name } });
+            if (!product) {
+                let category = await this.categoriesRepository.findOne({ where: { name: obj.categories } });
+                if (!category) {
+                    category = this.categoriesRepository.create({ name: obj.categories });
+                    await this.categoriesRepository.save(category);
+                }
+                const newProduct = this.productRepository.create({ ...obj, category });
+                await this.productRepository.save(newProduct);
+            }
+        }
+        ;
+        return 'productos cargados';
     }
     async getProductbyId(id) {
         const product = await this.productRepository.find({

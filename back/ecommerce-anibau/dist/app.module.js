@@ -17,6 +17,7 @@ const typeorm_config_1 = require("./config/typeorm.config");
 const categories_module_1 = require("./modulos/categories/categories.module");
 const orderDetail_module_1 = require("./modulos/orderDetails/orderDetail.module");
 const orders_module_1 = require("./modulos/orders/orders.module");
+const files_module_1 = require("./modulos/files/files.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -37,6 +38,7 @@ exports.AppModule = AppModule = __decorate([
             categories_module_1.CategoriesModule,
             orderDetail_module_1.OrderDetailModule,
             orders_module_1.OrdersModule,
+            files_module_1.FilesModule
         ],
         controllers: [],
         providers: [],
