@@ -1,5 +1,5 @@
 import { Type } from "class-transformer"
-import { IsEmail, IsNotEmpty, IsNumber, IsString, IsStrongPassword, Matches, MaxLength, MinLength } from "class-validator"
+import { IsEmail, IsNotEmpty, IsNumber, IsString, IsStrongPassword, Matches, MaxLength, MinLength, ValidateIf } from "class-validator"
 
 export class CreateUserDto {
     @IsNotEmpty()
@@ -14,7 +14,7 @@ export class CreateUserDto {
 
     @IsNotEmpty()
     @IsString()
-    @MaxLength(15)
+   // @MaxLength(15)
     @MinLength(8)
     @IsStrongPassword({
         minLowercase: 1,
@@ -22,11 +22,22 @@ export class CreateUserDto {
         minNumbers: 1,
         minSymbols: 1,
     })
-    @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,15}$/, {
+    @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/, {
         message:
           'password must be 8-15 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character (!@#$%^&*)',
       })
     password: string
+
+    @IsNotEmpty()
+    @IsString()
+    //@MaxLength(15)
+    @MinLength(8)
+    @ValidateIf(o => o.confirmPassword !== undefined)
+    @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/, {
+    message:
+    'password must match the required format',
+    })
+    confirmPassword: string
 
     @IsString()
     @MinLength(3)

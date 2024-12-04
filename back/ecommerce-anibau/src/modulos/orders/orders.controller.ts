@@ -1,6 +1,7 @@
-import { BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, UseGuards } from "@nestjs/common";
 import { OrdersService } from "./orders.service";
 import { CreateOrderDto } from "./CreateOrderDto";
+import { AuthGuard } from "../Auth/auth.guard";
 
 @Controller('orders')
 export class OrdesController {
@@ -16,6 +17,7 @@ export class OrdesController {
         }
     }
     @Get(':id')
+    @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.OK)
     async getOrder(@Param('id', ParseUUIDPipe) id:string){
         try{
@@ -25,6 +27,7 @@ export class OrdesController {
         }
     }
     @Post()
+    @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.CREATED)
     async addOrder(@Body() data: CreateOrderDto){
         try{

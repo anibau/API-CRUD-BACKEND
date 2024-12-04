@@ -19,7 +19,6 @@ export declare class UsersController {
         address: string;
         city: string;
     }>;
-    createUser(user: CreateUserDto): Promise<Users>;
     updateUser(id: string, data: CreateUserDto): Promise<string>;
     deleteUser(id: string): Promise<string>;
 }

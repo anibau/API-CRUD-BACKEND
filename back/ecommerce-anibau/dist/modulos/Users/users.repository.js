@@ -40,11 +40,6 @@ let UsersRepository = class UsersRepository {
         }));
         return { ...restUser, ordenes };
     }
-    async createUser(user) {
-        const newUser = this.userRepository.create(user);
-        await this.userRepository.save(newUser);
-        return newUser;
-    }
     async updateUser(id, dataUser) {
         const user = await this.userRepository.findOne({ where: { id: id }, relations: { orders: true } });
         if (!user) {

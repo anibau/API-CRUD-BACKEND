@@ -16,14 +16,11 @@ let UsersService = class UsersService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
-    getUsers() {
-        return this.userRepository.getUser();
+    async getUsers() {
+        return await this.userRepository.getUser();
     }
     async getUserbyId(id) {
         return this.userRepository.getUserbyId(id);
-    }
-    async createUser(body) {
-        return this.userRepository.createUser(body);
     }
     async updateUser(id, data) {
         return this.userRepository.updateUser(id, data);

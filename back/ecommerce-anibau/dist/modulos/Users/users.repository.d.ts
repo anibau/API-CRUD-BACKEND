@@ -18,7 +18,6 @@ export declare class UsersRepository {
         address: string;
         city: string;
     }>;
-    createUser(user: CreateUserDto): Promise<Users>;
     updateUser(id: string, dataUser: CreateUserDto): Promise<string>;
     deleteUser(id: string): Promise<string>;
     getUserbyQueries(page?: number, limit?: number): Promise<Users[]>;

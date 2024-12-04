@@ -7,48 +7,7 @@ import { CreateUserDto } from './CreateUserDto';
 @Injectable()
 export class UsersRepository {
   constructor(@InjectRepository(Users) private userRepository: Repository<Users>){}
-  // private Users: Users[] = [
-  //   {
-  //     id: 1,
-  //     email: 'nina@mail.com',
-  //     name: 'nina',
-  //     password: 'nina2000',
-  //     address: 'calle falsa 123',
-  //     phone: 'string',
-  //     country: undefined,
-  //     city: 'lima',
-  //   },
-  //   {
-  //     id: 2,
-  //     email: 'shushi@mail.com',
-  //     name: 'shushi',
-  //     password: 'nina2000',
-  //     address: 'calle falsa 123',
-  //     phone: 'string',
-  //     country: undefined,
-  //     city: 'lima',
-  //   },
-  //   {
-  //     id: 3,
-  //     email: 'locky@mail.com',
-  //     name: 'locky',
-  //     password: 'nina2000',
-  //     address: 'calle falsa 123',
-  //     phone: 'string',
-  //     country: undefined,
-  //     city: 'lima',
-  //   },
-  //   {
-  //     id: 4,
-  //     email: 'manchas@mail.com',
-  //     name: 'manchas',
-  //     password: 'nina2000',
-  //     address: 'calle falsa 123',
-  //     phone: 'string',
-  //     country: undefined,
-  //     city: 'lima',
-  //   },
-  // ];
+ 
   async getUser(): Promise<Users[]> {
     const users= await this.userRepository.find({relations:{orders:true}});
     if(!users.length){
@@ -75,11 +34,11 @@ export class UsersRepository {
     return {...restUser, ordenes}    
    
   }
-  async createUser(user:CreateUserDto):Promise<Users> {
-    const newUser= this.userRepository.create(user);
-    await this.userRepository.save(newUser);
-    return newUser
-  }
+  // async createUser(user:CreateUserDto):Promise<Users> {
+  //   const newUser= this.userRepository.create(user);
+  //   await this.userRepository.save(newUser);
+  //   return newUser
+  // }
   async updateUser(id: string, dataUser: CreateUserDto): Promise<string>{
     //buscar usuario por id
     const user= await this.userRepository.findOne({where:{id:id}, relations:{orders:true}});

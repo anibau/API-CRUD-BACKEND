@@ -1,18 +1,22 @@
-import { BadRequestException, Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './LoginUserDto';
+import { CreateUserDto } from '../Users/CreateUserDto';
+import { validateUser } from 'src/Utils/validateUser';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get()
-  @HttpCode(200)
-  getAuth() {
+  @Post('signup')
+  @HttpCode(201)
+  postSignup(@Body() user: CreateUserDto) {
     try{
-      return this.authService.getAuth();
+      if(validateUser(user)){
+        return this.authService.postSignup(user)
+      } else {throw new BadRequestException('datos incompletos')}
     }catch{
-      throw new BadRequestException()
+      throw new BadRequestException('Error al crear usuario')
     }
   }
   @Post('signin')

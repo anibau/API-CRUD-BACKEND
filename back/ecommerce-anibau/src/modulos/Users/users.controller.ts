@@ -8,7 +8,6 @@ import {
   NotFoundException,
   Param,
   ParseUUIDPipe,
-  Post,
   Put,
   Query,
   UseGuards,
@@ -26,16 +25,16 @@ export class UsersController {
   @Get()
   @UseGuards(AuthGuard)
   @HttpCode(200)
-  getUsers() {
+  async getUsers():Promise<Users[]> {
     try{
-      return this.usersService.getUsers();
+      return await this.usersService.getUsers();
     }catch{
       throw new BadRequestException('Error al obtener los usuarios')
     }
   }
-  //solicitud GET con QUERY PARAMS Y PAGINACION
+  //!solicitud GET con QUERY PARAMS Y PAGINACION
   @Get()
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)
   @HttpCode(200)
   getUserbyQuery(@Query('page') page: number= 1, @Query('limit') limit: number = 5) {
     try{
@@ -55,17 +54,17 @@ export class UsersController {
       throw new BadRequestException(`Error al obtener el usuario por id ${id}`)
     }
   }
-  @Post()
-  @HttpCode(201)
-  createUser(@Body() user:CreateUserDto): Promise<Users> {
-    try{
-      if(validateUser(user)){
-        return this.usersService.createUser(user);
-      } else {throw new NotFoundException(`datos incompletos para crear: ${user.name}`)}
-    }catch{
-      throw new BadRequestException('Error al crear usuario')
-    }
-  }
+  // @Post()
+  // @HttpCode(201)
+  // createUser(@Body() user:CreateUserDto): Promise<Users> {
+  //   try{
+  //     if(validateUser(user)){
+  //       return this.usersService.createUser(user);
+  //     } else {throw new NotFoundException(`datos incompletos para crear: ${user.name}`)}
+  //   }catch{
+  //     throw new BadRequestException('Error al crear usuario')
+  //   }
+  // }
   @Put(':id')
   @UseGuards(AuthGuard)
   @HttpCode(200)

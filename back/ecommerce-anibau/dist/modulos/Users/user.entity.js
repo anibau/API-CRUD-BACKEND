@@ -28,7 +28,7 @@ __decorate([
     __metadata("design:type", String)
 ], Users.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 20, nullable: false }),
+    (0, typeorm_1.Column)({ type: 'varchar', nullable: false }),
     __metadata("design:type", String)
 ], Users.prototype, "password", void 0);
 __decorate([

@@ -16,6 +16,7 @@ exports.OrdesController = void 0;
 const common_1 = require("@nestjs/common");
 const orders_service_1 = require("./orders.service");
 const CreateOrderDto_1 = require("./CreateOrderDto");
+const auth_guard_1 = require("../Auth/auth.guard");
 let OrdesController = class OrdesController {
     constructor(orderService) {
         this.orderService = orderService;
@@ -55,6 +56,7 @@ __decorate([
 ], OrdesController.prototype, "getOrderall", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
@@ -63,6 +65,7 @@ __decorate([
 ], OrdesController.prototype, "getOrder", null);
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),

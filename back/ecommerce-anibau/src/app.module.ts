@@ -9,6 +9,7 @@ import { CategoriesModule } from './modulos/categories/categories.module';
 import { OrderDetailModule } from './modulos/orderDetails/orderDetail.module';
 import { OrdersModule } from './modulos/orders/orders.module';
 import { FilesModule } from './modulos/files/files.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -26,7 +27,12 @@ import { FilesModule } from './modulos/files/files.module';
     CategoriesModule,
     OrderDetailModule,
     OrdersModule,
-    FilesModule
+    FilesModule,
+    JwtModule.register({
+      global:true,
+      signOptions:{expiresIn:'1h'},
+      secret: process.env.JWT_SECRET
+    })
   ],
   controllers: [],
   providers: [],

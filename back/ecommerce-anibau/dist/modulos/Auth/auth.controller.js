@@ -16,16 +16,23 @@ exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const LoginUserDto_1 = require("./LoginUserDto");
+const CreateUserDto_1 = require("../Users/CreateUserDto");
+const validateUser_1 = require("../../Utils/validateUser");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
-    getAuth() {
+    postSignup(user) {
         try {
-            return this.authService.getAuth();
+            if ((0, validateUser_1.validateUser)(user)) {
+                return this.authService.postSignup(user);
+            }
+            else {
+                throw new common_1.BadRequestException('datos incompletos');
+            }
         }
         catch {
-            throw new common_1.BadRequestException();
+            throw new common_1.BadRequestException('Error al crear usuario');
         }
     }
     userLogin(data) {
@@ -39,12 +46,13 @@ let AuthController = class AuthController {
 };
 exports.AuthController = AuthController;
 __decorate([
-    (0, common_1.Get)(),
-    (0, common_1.HttpCode)(200),
+    (0, common_1.Post)('signup'),
+    (0, common_1.HttpCode)(201),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [CreateUserDto_1.CreateUserDto]),
     __metadata("design:returntype", void 0)
-], AuthController.prototype, "getAuth", null);
+], AuthController.prototype, "postSignup", null);
 __decorate([
     (0, common_1.Post)('signin'),
     (0, common_1.HttpCode)(201),

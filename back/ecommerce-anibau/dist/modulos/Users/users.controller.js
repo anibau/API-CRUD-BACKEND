@@ -22,9 +22,9 @@ let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
     }
-    getUsers() {
+    async getUsers() {
         try {
-            return this.usersService.getUsers();
+            return await this.usersService.getUsers();
         }
         catch {
             throw new common_1.BadRequestException('Error al obtener los usuarios');
@@ -44,19 +44,6 @@ let UsersController = class UsersController {
         }
         catch {
             throw new common_1.BadRequestException(`Error al obtener el usuario por id ${id}`);
-        }
-    }
-    createUser(user) {
-        try {
-            if ((0, validateUser_1.validateUser)(user)) {
-                return this.usersService.createUser(user);
-            }
-            else {
-                throw new common_1.NotFoundException(`datos incompletos para crear: ${user.name}`);
-            }
-        }
-        catch {
-            throw new common_1.BadRequestException('Error al crear usuario');
         }
     }
     updateUser(id, data) {
@@ -88,11 +75,10 @@ __decorate([
     (0, common_1.HttpCode)(200),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getUsers", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Query)('page')),
     __param(1, (0, common_1.Query)('limit')),
@@ -109,14 +95,6 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUserbyId", null);
-__decorate([
-    (0, common_1.Post)(),
-    (0, common_1.HttpCode)(201),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [CreateUserDto_1.CreateUserDto]),
-    __metadata("design:returntype", Promise)
-], UsersController.prototype, "createUser", null);
 __decorate([
     (0, common_1.Put)(':id'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),

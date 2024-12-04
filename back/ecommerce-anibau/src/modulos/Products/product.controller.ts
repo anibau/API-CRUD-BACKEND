@@ -49,7 +49,7 @@ export class ProductsController {
     }
   }
   @Post()
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)
   @HttpCode(HttpStatus.CREATED)
   async createProduct(@Body() data: ProductDto): Promise<Products> {
     try{
@@ -78,7 +78,7 @@ export class ProductsController {
     }
   }
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   deleteProduct(@Param('id', ParseUUIDPipe) id:string) {
     try{

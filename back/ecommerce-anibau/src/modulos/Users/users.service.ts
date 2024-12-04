@@ -6,8 +6,8 @@ import { CreateUserDto } from './CreateUserDto';
 @Injectable()
 export class UsersService {
   constructor(private userRepository: UsersRepository) {}
-  getUsers() {
-    return this.userRepository.getUser();
+  async getUsers():Promise<Users[]>{
+    return await this.userRepository.getUser();
   }
   
   async getUserbyId(id: string) {
@@ -21,13 +21,13 @@ export class UsersService {
     return this.userRepository.getUserbyId(id)
   
   }
-  async createUser(body: CreateUserDto):Promise<Users> {
-    // const users: Users[] = await this.userRepository.getUser();
-    // const id = users.length + 1;
-    // users.push({ id, ...body });
-    // return { id, ...body };
-    return this.userRepository.createUser(body)
-  }
+  // async createUser(body: CreateUserDto):Promise<Users> {
+  //   // const users: Users[] = await this.userRepository.getUser();
+  //   // const id = users.length + 1;
+  //   // users.push({ id, ...body });
+  //   // return { id, ...body };
+  //   return this.userRepository.createUser(body)
+  // }
   async updateUser(id: string, data: CreateUserDto) {
     // const users: Users[] = await this.userRepository.getUser();
     // const user: Users = users.find((user) => user.id === id);
