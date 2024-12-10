@@ -17,13 +17,16 @@ import { AuthGuard } from '../Auth/auth.guard';
 import { Users } from './user.entity';
 import { validateUser } from 'src/Utils/validateUser';
 import { CreateUserDto } from './CreateUserDto';
+import { Role, Roles } from '../Auth/roles.decorator';
+import { RolesGuard } from '../Auth/roles.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   @HttpCode(200)
   async getUsers():Promise<Users[]> {
     try{

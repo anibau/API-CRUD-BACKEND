@@ -22,7 +22,7 @@ let UsersRepository = class UsersRepository {
         this.userRepository = userRepository;
     }
     async getUser() {
-        const users = await this.userRepository.find({ relations: { orders: true } });
+        const users = await this.userRepository.find({ select: ['id', 'name', 'email', 'phone', 'country', 'address', 'city'], relations: { orders: true } });
         if (!users.length) {
             throw new common_1.NotFoundException('no se encontraron usuarios');
         }
@@ -33,7 +33,7 @@ let UsersRepository = class UsersRepository {
         if (!user) {
             throw new common_1.NotFoundException(`el usuario con id ${id} no existe`);
         }
-        const { password, orders, ...restUser } = user;
+        const { password, orders, isAdmin, ...restUser } = user;
         const ordenes = user.orders.map((order) => ({
             id: order.id,
             date: order.date

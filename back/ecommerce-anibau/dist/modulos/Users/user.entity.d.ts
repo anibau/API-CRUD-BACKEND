@@ -9,4 +9,5 @@ export declare class Users {
     address: string;
     city: string;
     orders: Orders[];
+    isAdmin: boolean;
 }

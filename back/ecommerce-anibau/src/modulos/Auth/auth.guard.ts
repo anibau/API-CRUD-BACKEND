@@ -10,9 +10,9 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     //verificamos que el encabezado esta presente y sigue el formato bearer <token>
     const authHeader = request.headers['authorization'];
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException('Authorization header is missing or malformed');
-    };
+    // if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    //   throw new UnauthorizedException('Authorization header is missing or malformed');
+    // };
     const token = authHeader.split(' ')[1];
     if(!token){
       throw new UnauthorizedException('token not found')

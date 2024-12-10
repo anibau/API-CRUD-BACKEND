@@ -18,6 +18,8 @@ const users_service_1 = require("./users.service");
 const auth_guard_1 = require("../Auth/auth.guard");
 const validateUser_1 = require("../../Utils/validateUser");
 const CreateUserDto_1 = require("./CreateUserDto");
+const roles_decorator_1 = require("../Auth/roles.decorator");
+const roles_guard_1 = require("../Auth/roles.guard");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -71,7 +73,8 @@ let UsersController = class UsersController {
 exports.UsersController = UsersController;
 __decorate([
     (0, common_1.Get)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, roles_decorator_1.Roles)(roles_decorator_1.Role.Admin),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, roles_guard_1.RolesGuard),
     (0, common_1.HttpCode)(200),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),

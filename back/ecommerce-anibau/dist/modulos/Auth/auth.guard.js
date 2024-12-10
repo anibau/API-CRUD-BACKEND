@@ -19,10 +19,6 @@ let AuthGuard = class AuthGuard {
     canActivate(context) {
         const request = context.switchToHttp().getRequest();
         const authHeader = request.headers['authorization'];
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            throw new common_1.UnauthorizedException('Authorization header is missing or malformed');
-        }
-        ;
         const token = authHeader.split(' ')[1];
         if (!token) {
             throw new common_1.UnauthorizedException('token not found');

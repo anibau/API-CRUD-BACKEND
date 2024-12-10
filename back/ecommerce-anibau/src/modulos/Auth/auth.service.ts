@@ -6,6 +6,7 @@ import { LoginUserDto } from './LoginUserDto';
 import { CreateUserDto } from '../Users/CreateUserDto';
 import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt';
+import { Role } from './roles.decorator';
 
 @Injectable()
 export class AuthService {
@@ -49,18 +50,19 @@ private readonly jwtService: JwtService) {}
     const userPayload= {
       sub: user.id,
       id: user.id,
-      email: user.email
+      email: user.email,
+      roles: [user.isAdmin? Role.Admin : Role.User]
     }
     const token=  this.jwtService.sign(userPayload);
 
-    return {message:"User logged  in successfully", token,
-      user}
-    // const user = users.find(
-    //   (user) => user.email === data.email && user.password === data.password,
-    // );
-    // if (!user) {
-    //   throw new Error('Email o password incorrectos');
-    // }
-    // return user;
+    return {message:"User logged  in successfully", token}
+    }
   }
-}
+  
+  // const user = users.find(
+  //   (user) => user.email === data.email && user.password === data.password,
+  // );
+  // if (!user) {
+  //   throw new Error('Email o password incorrectos');
+  // }
+  // return user;

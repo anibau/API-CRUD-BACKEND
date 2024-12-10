@@ -18,6 +18,8 @@ const product_service_1 = require("./product.service");
 const auth_guard_1 = require("../Auth/auth.guard");
 const validateProduct_1 = require("../../Utils/validateProduct");
 const productDto_1 = require("./productDto");
+const roles_decorator_1 = require("../Auth/roles.decorator");
+const roles_guard_1 = require("../Auth/roles.guard");
 let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
@@ -108,7 +110,8 @@ __decorate([
 ], ProductsController.prototype, "createProduct", null);
 __decorate([
     (0, common_1.Put)(':id'),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, roles_decorator_1.Roles)(roles_decorator_1.Role.Admin),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, roles_guard_1.RolesGuard),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Body)()),

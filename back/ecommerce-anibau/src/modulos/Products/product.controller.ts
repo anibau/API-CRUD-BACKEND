@@ -18,6 +18,8 @@ import { AuthGuard } from '../Auth/auth.guard';
 import { Products } from './product.entity';
 import { validateProduct } from 'src/Utils/validateProduct';
 import { ProductDto } from './productDto';
+import { Role, Roles } from '../Auth/roles.decorator';
+import { RolesGuard } from '../Auth/roles.guard';
 
 @Controller('products')
 export class ProductsController {
@@ -61,7 +63,8 @@ export class ProductsController {
     }
   }
   @Put(':id')
-  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   @HttpCode(HttpStatus.OK)
   updateProduct(
     @Param('id', ParseUUIDPipe) id:string,

@@ -16,10 +16,10 @@ export declare class AuthService {
         address: string;
         city: string;
         orders: import("../orders/orders.entity").Orders[];
+        isAdmin: boolean;
     }>;
     getLogin(data: LoginUserDto): Promise<{
         message: string;
         token: string;
-        user: Users;
     }>;
 }

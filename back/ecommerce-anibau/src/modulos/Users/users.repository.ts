@@ -9,7 +9,7 @@ export class UsersRepository {
   constructor(@InjectRepository(Users) private userRepository: Repository<Users>){}
  
   async getUser(): Promise<Users[]> {
-    const users= await this.userRepository.find({relations:{orders:true}});
+    const users= await this.userRepository.find({select:['id', 'name', 'email', 'phone', 'country', 'address', 'city'] ,relations:{orders:true}});
     if(!users.length){
       throw new NotFoundException('no se encontraron usuarios')
     }
@@ -24,7 +24,7 @@ export class UsersRepository {
       throw new NotFoundException(`el usuario con id ${id} no existe`)
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const {password, orders, ...restUser}= user;
+    const {password, orders, isAdmin,...restUser}= user;
     // Un arreglo (array) de órdenes de compra (Orders) relacionadas con ese usuario.
     // Cada orden debe incluir solo los campos id y date.
     const ordenes= user.orders.map((order)=>({

@@ -23,4 +23,7 @@ export class Users {
     //! orders_id: Relación 1:N con orders.
     @OneToMany(()=>Orders, (order)=>order.user, {cascade:true})
     orders: Orders[]
+
+    @Column({default: false})
+    isAdmin: boolean
 }
