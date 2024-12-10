@@ -22,7 +22,7 @@ let UsersRepository = class UsersRepository {
         this.userRepository = userRepository;
     }
     async getUser() {
-        const users = await this.userRepository.find({ select: ['id', 'name', 'email', 'phone', 'country', 'address', 'city'], relations: { orders: true } });
+        const users = await this.userRepository.find({ select: ['id', 'name', 'email', 'phone', 'country', 'address', 'city', 'isAdmin'], relations: { orders: true } });
         if (!users.length) {
             throw new common_1.NotFoundException('no se encontraron usuarios');
         }
@@ -52,7 +52,7 @@ let UsersRepository = class UsersRepository {
     async deleteUser(id) {
         const user = await this.userRepository.findOne({ where: { id: id } });
         if (!user) {
-            throw new common_1.NotFoundException(`ucuario con id ${id} no encontrado`);
+            throw new common_1.NotFoundException(`usuario con id ${id} no encontrado`);
         }
         await this.userRepository.remove(user);
         return `el usuario con id ${id} fue eliminado exitosamente`;

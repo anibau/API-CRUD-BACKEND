@@ -9,7 +9,7 @@ export class UsersRepository {
   constructor(@InjectRepository(Users) private userRepository: Repository<Users>){}
  
   async getUser(): Promise<Users[]> {
-    const users= await this.userRepository.find({select:['id', 'name', 'email', 'phone', 'country', 'address', 'city'] ,relations:{orders:true}});
+    const users= await this.userRepository.find({select:['id', 'name', 'email', 'phone', 'country', 'address', 'city', 'isAdmin'] ,relations:{orders:true}});
     if(!users.length){
       throw new NotFoundException('no se encontraron usuarios')
     }
@@ -53,7 +53,7 @@ export class UsersRepository {
   async deleteUser(id:string){
     const user= await this.userRepository.findOne({where:{id:id}});
     if(!user){
-      throw new NotFoundException(`ucuario con id ${id} no encontrado`)
+      throw new NotFoundException(`usuario con id ${id} no encontrado`)
     }
     await this.userRepository.remove(user);
     return `el usuario con id ${id} fue eliminado exitosamente`

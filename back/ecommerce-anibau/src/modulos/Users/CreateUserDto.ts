@@ -59,5 +59,5 @@ export class CreateUserDto {
     @MaxLength(20)
     city: string
 
-    isAdmin: boolean
+    //isAdmin: boolean
 }
