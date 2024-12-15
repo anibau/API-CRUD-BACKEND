@@ -31,14 +31,10 @@ export class UsersRepository {
       id:order.id,
       date:order.date
     }))
-    return {...restUser, ordenes}    
+    return {...restUser, orders:ordenes}    
    
   }
-  // async createUser(user:CreateUserDto):Promise<Users> {
-  //   const newUser= this.userRepository.create(user);
-  //   await this.userRepository.save(newUser);
-  //   return newUser
-  // }
+
   async updateUser(id: string, dataUser: CreateUserDto): Promise<string>{
     //buscar usuario por id
     const user= await this.userRepository.findOne({where:{id:id}, relations:{orders:true}});

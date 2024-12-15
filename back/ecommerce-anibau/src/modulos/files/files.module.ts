@@ -4,7 +4,7 @@ import { FilesRepository } from "./files.repository";
 import { FilesController } from "./files.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Products } from "../Products/product.entity";
-import { configCloudinary } from "src/config/cloudinary";
+import { configCloudinary } from "../../config/cloudinary";
 
 @Module({
     imports:[TypeOrmModule.forFeature([Products])],

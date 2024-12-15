@@ -15,7 +15,7 @@ import {
 import { UsersService } from './users.service';
 import { AuthGuard } from '../Auth/auth.guard';
 import { Users } from './user.entity';
-import { validateUser } from 'src/Utils/validateUser';
+import { validateUser } from '../../Utils/validateUser';
 import { CreateUserDto } from './CreateUserDto';
 import { Role, Roles } from '../Auth/roles.decorator';
 import { RolesGuard } from '../Auth/roles.guard';

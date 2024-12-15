@@ -6,7 +6,7 @@ export declare class UsersRepository {
     constructor(userRepository: Repository<Users>);
     getUser(): Promise<Users[]>;
     getUserbyId(id: string): Promise<{
-        ordenes: {
+        orders: {
             id: string;
             date: Date;
         }[];

@@ -13,7 +13,6 @@ export declare class AuthController {
         address: string;
         city: string;
         orders: import("../orders/orders.entity").Orders[];
-        isAdmin: boolean;
     }>;
     userLogin(data: LoginUserDto): Promise<{
         message: string;

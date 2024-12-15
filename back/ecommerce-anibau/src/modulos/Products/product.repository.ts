@@ -33,7 +33,7 @@ export class ProductRepository {
   }
 
   async getProductbyId(id:string){
-    const product= await this.productRepository.find({
+    const product= await this.productRepository.findOne({
       where:{id: id}, relations: {category:true}
     });
     if(!product){
@@ -67,26 +67,31 @@ export class ProductRepository {
   }
   async updateProduct(id:string, data:ProductDto){
     //busqueda de producto por id
-    const product= await this.productRepository.findOne({where:{id:id}, relations:{category:true}});
-    if (!product) {
-       throw new NotFoundException(`el producto ${id} no existe`);
-    };
-    //verificar si categorie existe o sino crearla
-    const {categories:categName, ...restProduct }= data;
-    if(categName){
-      let category= await this.categoriesRepository.findOne({where: {name:categName}});
-      if(!category){
-        category= this.categoriesRepository.create({name: categName});
-        await this.categoriesRepository.save(category)
+    try{
+
+      const product= await this.productRepository.findOne({where:{id:id}, relations:{category:true}});
+      if (!product) {
+        throw new NotFoundException(`el producto ${id} no existe`);
       };
-      //asociar la nueva categoria al producto
-      product.category= category;
+      //verificar si categorie existe o sino crearla
+      const {categories:categName, ...restProduct }= data;
+      if(categName){
+        let category= await this.categoriesRepository.findOne({where: {name:categName}});
+        if(!category){
+          category= this.categoriesRepository.create({name: categName});
+          await this.categoriesRepository.save(category)
+        };
+        //asociar la nueva categoria al producto
+        product.category= category;
+      }
+      //actualizar las propiedades del producto
+      Object.assign(product, restProduct)
+      //guaradar el producto actualizado
+      await this.productRepository.save(product);
+      return `producto con id ${id} actualizado exitosamente`;
+    }catch(error){
+      throw new NotFoundException('error al actualizar '+ error)
     }
-    //actualizar las propiedades del producto
-    Object.assign(product, restProduct)
-    //guaradar el producto actualizado
-     this.productRepository.save(product);
-     return `producto con id ${id} actualizado exitosamente`;
   }
   async deleteProduct(id:string){
     //encontramos el producto por id

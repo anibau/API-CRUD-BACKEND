@@ -16,7 +16,7 @@ import {
 import { ProductService } from './product.service';
 import { AuthGuard } from '../Auth/auth.guard';
 import { Products } from './product.entity';
-import { validateProduct } from 'src/Utils/validateProduct';
+import { validateProduct } from '../../Utils/validateProduct';
 import { ProductDto } from './productDto';
 import { Role, Roles } from '../Auth/roles.decorator';
 import { RolesGuard } from '../Auth/roles.guard';

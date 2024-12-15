@@ -42,7 +42,7 @@ let AuthService = class AuthService {
         }
         const newUser = this.usersRepository.create({ ...user, password: hashedPassword });
         await this.usersRepository.save(newUser);
-        const { password, ...dataUser } = newUser;
+        const { password, isAdmin, ...dataUser } = newUser;
         console.log(password);
         return dataUser;
     }

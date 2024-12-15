@@ -7,7 +7,7 @@ export declare class UsersController {
     getUsers(): Promise<Users[]>;
     getUserbyQuery(page?: number, limit?: number): Promise<Users[]>;
     getUserbyId(id: string): Promise<{
-        ordenes: {
+        orders: {
             id: string;
             date: Date;
         }[];

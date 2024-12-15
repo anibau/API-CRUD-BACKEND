@@ -1,11 +1,11 @@
 
 import { registerAs } from "@nestjs/config";
 import { config as dotenvConfig } from "dotenv";
-import { Categories } from "src/modulos/categories/categories.entity";
-import { OrderDetails } from "src/modulos/orderDetails/orderDetail.entity";
-import { Orders } from "src/modulos/orders/orders.entity";
-import { Products } from "src/modulos/Products/product.entity";
-import { Users } from "src/modulos/Users/user.entity";
+import { Categories } from "../modulos/categories/categories.entity";
+import { OrderDetails } from "../modulos/orderDetails/orderDetail.entity";
+import { Orders } from "../modulos/orders/orders.entity";
+import { Products } from "../modulos/Products/product.entity";
+import { Users } from "../modulos/Users/user.entity";
 import { DataSource, DataSourceOptions } from "typeorm";
 
 dotenvConfig({path:'.env'})

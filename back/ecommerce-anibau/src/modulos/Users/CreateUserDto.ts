@@ -1,5 +1,5 @@
 import { Type } from "class-transformer"
-import { IsEmail, IsNotEmpty, IsNumber, IsString, IsStrongPassword, Matches, MaxLength, MinLength, ValidateIf } from "class-validator"
+import { IsEmail, IsEmpty, IsNotEmpty, IsNumber, IsString, IsStrongPassword, Matches, MaxLength, MinLength, ValidateIf } from "class-validator"
 
 export class CreateUserDto {
     @IsNotEmpty()
@@ -59,5 +59,6 @@ export class CreateUserDto {
     @MaxLength(20)
     city: string
 
-    //isAdmin: boolean
+    @IsEmpty()
+    isAdmin: boolean
 }

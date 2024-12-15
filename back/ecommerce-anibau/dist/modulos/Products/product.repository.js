@@ -46,7 +46,7 @@ let ProductRepository = class ProductRepository {
         return 'productos cargados';
     }
     async getProductbyId(id) {
-        const product = await this.productRepository.find({
+        const product = await this.productRepository.findOne({
             where: { id: id }, relations: { category: true }
         });
         if (!product) {
@@ -76,24 +76,29 @@ let ProductRepository = class ProductRepository {
         return newProduct;
     }
     async updateProduct(id, data) {
-        const product = await this.productRepository.findOne({ where: { id: id }, relations: { category: true } });
-        if (!product) {
-            throw new common_1.NotFoundException(`el producto ${id} no existe`);
-        }
-        ;
-        const { categories: categName, ...restProduct } = data;
-        if (categName) {
-            let category = await this.categoriesRepository.findOne({ where: { name: categName } });
-            if (!category) {
-                category = this.categoriesRepository.create({ name: categName });
-                await this.categoriesRepository.save(category);
+        try {
+            const product = await this.productRepository.findOne({ where: { id: id }, relations: { category: true } });
+            if (!product) {
+                throw new common_1.NotFoundException(`el producto ${id} no existe`);
             }
             ;
-            product.category = category;
+            const { categories: categName, ...restProduct } = data;
+            if (categName) {
+                let category = await this.categoriesRepository.findOne({ where: { name: categName } });
+                if (!category) {
+                    category = this.categoriesRepository.create({ name: categName });
+                    await this.categoriesRepository.save(category);
+                }
+                ;
+                product.category = category;
+            }
+            Object.assign(product, restProduct);
+            await this.productRepository.save(product);
+            return `producto con id ${id} actualizado exitosamente`;
         }
-        Object.assign(product, restProduct);
-        this.productRepository.save(product);
-        return `producto con id ${id} actualizado exitosamente`;
+        catch (error) {
+            throw new common_1.NotFoundException('error al actualizar ' + error);
+        }
     }
     async deleteProduct(id) {
         const product = await this.productRepository.findOne({ where: { id: id } });

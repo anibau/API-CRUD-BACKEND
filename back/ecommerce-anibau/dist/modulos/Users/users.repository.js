@@ -38,7 +38,7 @@ let UsersRepository = class UsersRepository {
             id: order.id,
             date: order.date
         }));
-        return { ...restUser, ordenes };
+        return { ...restUser, orders: ordenes };
     }
     async updateUser(id, dataUser) {
         const user = await this.userRepository.findOne({ where: { id: id }, relations: { orders: true } });

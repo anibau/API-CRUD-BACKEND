@@ -31,7 +31,8 @@ private readonly jwtService: JwtService) {}
     //crear usuario
     const newUser=  this.usersRepository.create({...user, password: hashedPassword});
     await this.usersRepository.save(newUser);
-    const {password, ...dataUser}= newUser;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const {password, isAdmin, ...dataUser}= newUser;
     console.log(password);
     return dataUser
   }
