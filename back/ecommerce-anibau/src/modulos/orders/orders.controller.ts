@@ -6,7 +6,7 @@ import { AuthGuard } from "../Auth/auth.guard";
 @Controller('orders')
 export class OrdesController {
     constructor(private readonly orderService:OrdersService){}
-
+//* GET/ORDERS
     @Get()
     @HttpCode(HttpStatus.OK)
     async getOrderall(){
@@ -16,6 +16,7 @@ export class OrdesController {
             throw new BadRequestException('Error al obtener las ordenes')
         }
     }
+//* GET/ORDERS/:ID
     @Get(':id')
     @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.OK)
@@ -26,6 +27,7 @@ export class OrdesController {
             throw new BadRequestException(`Error al obtener la orden por id ${id}`)
         }
     }
+    //* POST/ORDERS
     @Post()
     @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.CREATED)

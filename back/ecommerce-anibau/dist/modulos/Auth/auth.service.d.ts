@@ -21,4 +21,5 @@ export declare class AuthService {
         message: string;
         token: string;
     }>;
+    createAdminUser(): Promise<void>;
 }

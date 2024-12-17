@@ -18,10 +18,12 @@ const typeorm_1 = require("@nestjs/typeorm");
 const orderDetail_entity_1 = require("./orderDetail.entity");
 const typeorm_2 = require("typeorm");
 const orders_entity_1 = require("../orders/orders.entity");
+const product_entity_1 = require("../Products/product.entity");
 let OrderDetailRepository = class OrderDetailRepository {
-    constructor(orderDetailRepository, orderRepository) {
+    constructor(orderDetailRepository, orderRepository, productRepository) {
         this.orderDetailRepository = orderDetailRepository;
         this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
     }
     async getAll() {
         const OrdersD = await this.orderDetailRepository.find({ relations: { order: true, products: true } });
@@ -42,7 +44,22 @@ let OrderDetailRepository = class OrderDetailRepository {
         if (!order) {
             throw new common_1.NotFoundException(`order con id ${data.order} no encontrada`);
         }
-        const newDetail = this.orderDetailRepository.create({ ...data, order });
+        const productsId = data.products.map((product) => product.id);
+        const products = await Promise.all(productsId.map(async (productId) => {
+            const product = await this.productRepository.findOne({ where: { id: productId } });
+            if (!product || product.stock <= 0) {
+                throw new common_1.NotFoundException(`El producto con ID ${productId} no está disponible o no tiene stock.`);
+            }
+            ;
+            return product;
+        }));
+        let priceTotal = 0;
+        for (const product of products) {
+            priceTotal += parseFloat(product.price.toString());
+            product.stock -= 1;
+            await this.productRepository.save(product);
+        }
+        const newDetail = this.orderDetailRepository.create({ price: priceTotal, products, order });
         return await this.orderDetailRepository.save(newDetail);
     }
 };
@@ -51,7 +68,9 @@ exports.OrderDetailRepository = OrderDetailRepository = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(orderDetail_entity_1.OrderDetails)),
     __param(1, (0, typeorm_1.InjectRepository)(orders_entity_1.Orders)),
+    __param(2, (0, typeorm_1.InjectRepository)(product_entity_1.Products)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository])
 ], OrderDetailRepository);
 //# sourceMappingURL=orderDetail.repository.js.map

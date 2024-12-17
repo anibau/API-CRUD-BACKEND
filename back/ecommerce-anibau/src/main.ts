@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
+import { AuthService } from './modulos/Auth/auth.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,6 +21,8 @@ async function bootstrap() {
     })
   )
   app.use(LoggerMiddleware);
+  const adminUserService= app.get(AuthService);
+  await adminUserService.createAdminUser();
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

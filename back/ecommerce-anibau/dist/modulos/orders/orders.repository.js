@@ -44,7 +44,7 @@ let OrderRepository = class OrderRepository {
         return orders;
     }
     async addOrder(data) {
-        const user = await this.userRepository.findOne({ where: { id: data.userId } });
+        const user = await this.userRepository.findOne({ where: { id: data.userId }, select: ['id', 'name', 'email', 'phone', 'country', 'address', 'city'] });
         if (!user) {
             throw new common_1.NotFoundException(`usuario con id ${data.userId} no encontrado`);
         }

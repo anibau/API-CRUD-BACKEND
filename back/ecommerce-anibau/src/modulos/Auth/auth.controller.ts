@@ -8,6 +8,7 @@ import { validateUser } from '../../Utils/validateUser';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  //* POST/AUTH/SIGNUP
   @Post('signup')
   @HttpCode(201)
   postSignup(@Body() user: CreateUserDto) {
@@ -19,6 +20,7 @@ export class AuthController {
       throw new BadRequestException('Error al crear usuario')
     }
   }
+  //* POST/AUTH/SIGNIN
   @Post('signin')
   @HttpCode(201)
   userLogin(@Body() data: LoginUserDto) {

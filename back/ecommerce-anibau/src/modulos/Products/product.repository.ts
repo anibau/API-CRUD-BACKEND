@@ -11,12 +11,13 @@ export class ProductRepository {
   constructor(@InjectRepository(Products) private productRepository: Repository<Products>,
   @InjectRepository(Categories) private categoriesRepository: Repository <Categories>
 ){}
+  //* GET/PRODUCTS/
   async getProducts() {
     return this.productRepository.find({relations: {
       category:true
     }});
   }
-
+  //* GET/SEEDER
   async addProductJSON(){
     for(const obj of data){
       const product= await this.productRepository.findOne({where:{name: obj.name}});
@@ -31,7 +32,7 @@ export class ProductRepository {
       }
     }; return 'productos cargados'
   }
-
+  //* GET/PRODUCTS/:ID
   async getProductbyId(id:string){
     const product= await this.productRepository.findOne({
       where:{id: id}, relations: {category:true}
@@ -41,6 +42,7 @@ export class ProductRepository {
     }
     return product
   }
+  //* POST/PRODUCTS
   async createProduct(product: ProductDto):Promise<Products> {
     //desestructur para obtener category 
     const {categories: categName, ...restProduct}= product;
@@ -65,6 +67,7 @@ export class ProductRepository {
     await this.productRepository.save(newProduct)
     return newProduct
   }
+  //* PUT/PRODUCTS
   async updateProduct(id:string, data:ProductDto){
     //busqueda de producto por id
     try{
@@ -93,6 +96,7 @@ export class ProductRepository {
       throw new NotFoundException('error al actualizar '+ error)
     }
   }
+  //* DELETE/PRODUCTS
   async deleteProduct(id:string){
     //encontramos el producto por id
     const product= await this.productRepository.findOne({where:{id:id}});

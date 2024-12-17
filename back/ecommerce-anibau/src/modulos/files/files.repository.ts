@@ -9,6 +9,7 @@ import * as toStream from 'buffer-to-stream'
 export class FilesRepository{
     constructor(@InjectRepository(Products) private productRepository: Repository<Products>){}
 
+    //* POST/FILES/UPLOADIMAGE/:ID
     async uploadImage(id:string, file:Express.Multer.File){
         const product= await this.productRepository.findOne({where:{id: id}});
         if(!product){

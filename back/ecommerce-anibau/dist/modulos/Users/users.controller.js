@@ -37,7 +37,7 @@ let UsersController = class UsersController {
             return this.usersService.getUserbyQueryParams(page, limit);
         }
         catch {
-            throw new common_1.BadRequestException('Error al obtener el products por querys ');
+            throw new common_1.BadRequestException('Error al obtener el producto por query ');
         }
     }
     getUserbyId(id) {

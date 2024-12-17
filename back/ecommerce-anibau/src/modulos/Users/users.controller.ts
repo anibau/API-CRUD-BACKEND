@@ -24,6 +24,7 @@ import { RolesGuard } from '../Auth/roles.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  //* GET/USERS 
   @Get()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
@@ -43,10 +44,10 @@ export class UsersController {
     try{
       return this.usersService.getUserbyQueryParams(page,limit);
     }catch{
-      throw new BadRequestException('Error al obtener el products por querys ')
+      throw new BadRequestException('Error al obtener el producto por query ')
     }
   }
-
+  //* GET/USERS/:ID
   @Get(':id')
   @UseGuards(AuthGuard)
   @HttpCode(200)
@@ -57,17 +58,7 @@ export class UsersController {
       throw new BadRequestException(`Error al obtener el usuario por id ${id}`)
     }
   }
-  // @Post()
-  // @HttpCode(201)
-  // createUser(@Body() user:CreateUserDto): Promise<Users> {
-  //   try{
-  //     if(validateUser(user)){
-  //       return this.usersService.createUser(user);
-  //     } else {throw new NotFoundException(`datos incompletos para crear: ${user.name}`)}
-  //   }catch{
-  //     throw new BadRequestException('Error al crear usuario')
-  //   }
-  // }
+  //* PUT/USERS/:ID
   @Put(':id')
   @UseGuards(AuthGuard)
   @HttpCode(200)
@@ -83,6 +74,7 @@ export class UsersController {
       throw new BadRequestException(`Error al actualizar el usuario por id ${id}`)
     }
   }
+  //* DELETE/USERS/:ID
   @Delete(':id')
   @UseGuards(AuthGuard)
   @HttpCode(200)

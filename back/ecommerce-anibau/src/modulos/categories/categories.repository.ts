@@ -3,11 +3,13 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Categories } from "./categories.entity";
 import { Repository } from "typeorm";
 import * as data from '../../Utils/data.json'
+import { CategorieDto } from "./categorie.dto";
 
 @Injectable()
 export class CategoriesRepository{
     constructor(@InjectRepository(Categories) private categoriesRepository: Repository<Categories>){}
     
+    //* GET/CATEGORIES
     async getCategories (){
         const categories= await this.categoriesRepository.find({relations:{products:true}});
         if (!categories.length) {
@@ -15,7 +17,7 @@ export class CategoriesRepository{
           }
           return categories
     }
-
+    //* GET/SEEDER
     async addCategoryJSON(){
         for (const obj of data){
             const category= await this.categoriesRepository.findOne({where:{name: obj.categories}});
@@ -25,8 +27,8 @@ export class CategoriesRepository{
             }
         }; return 'las categorias fueron agregadas'
     }
-
-    async addCategories(categorie: Partial<Categories>): Promise<Categories>{
+    //* POST/CATEGORIES
+    async addCategories(categorie:CategorieDto): Promise<Categories>{
         const searchCategory= await this.categoriesRepository.findOne({where:{name: categorie.name}});
         if(searchCategory){
             throw new NotFoundException(`Error: la categoria ${categorie.name} ya existe`)

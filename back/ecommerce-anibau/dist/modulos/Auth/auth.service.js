@@ -65,6 +65,22 @@ let AuthService = class AuthService {
         const token = this.jwtService.sign(userPayload);
         return { message: "User logged  in successfully", token };
     }
+    async createAdminUser() {
+        const existingAdmin = await this.usersRepository.findOne({ where: { isAdmin: true } });
+        if (!existingAdmin) {
+            const adminUser = new user_entity_1.Users();
+            adminUser.name = 'Default Admin';
+            adminUser.email = process.env.ADMIN_EMAIL;
+            adminUser.password = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
+            adminUser.address = 'calle admin 777';
+            adminUser.city = 'peruadmin';
+            adminUser.country = 'peruadmin';
+            adminUser.phone = 124587;
+            adminUser.isAdmin = true;
+            await this.usersRepository.save(adminUser);
+            console.log('Admin user created');
+        }
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

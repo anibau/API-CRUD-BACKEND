@@ -25,6 +25,7 @@ import { RolesGuard } from '../Auth/roles.guard';
 export class ProductsController {
   constructor(private readonly productsService: ProductService) {}
 
+  //* GET/PRODUCTS/
   @Get()
   @HttpCode(HttpStatus.OK)
   getProducts() {
@@ -34,13 +35,13 @@ export class ProductsController {
       throw new BadRequestException('Error al obtener los products')
     }
   }
-
+  //* GET/SEEDER
   @Get('seeder')
   async addProductJSON(){
     return this.productsService.addProductJSON()
   }
 
-
+  //* GET/PRODUCTS/:ID
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   getProductbyId(@Param('id', ParseUUIDPipe) id:string ) {
@@ -50,6 +51,7 @@ export class ProductsController {
       throw new BadRequestException('Error al obtener el products por id '+id)
     }
   }
+  //* POST/PRODUCTS
   @Post()
   //@UseGuards(AuthGuard)
   @HttpCode(HttpStatus.CREATED)
@@ -62,6 +64,7 @@ export class ProductsController {
       throw new BadRequestException('Error al crear el producto')
     }
   }
+  //* PUT/PRODUCTS
   @Put(':id')
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
@@ -80,6 +83,7 @@ export class ProductsController {
       throw new BadRequestException('Error al actualizar el producto por id '+id)
     }
   }
+  //* DELETE/PRODUCTS
   @Delete(':id')
   //@UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)

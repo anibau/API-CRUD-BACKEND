@@ -19,6 +19,10 @@ let AuthGuard = class AuthGuard {
     canActivate(context) {
         const request = context.switchToHttp().getRequest();
         const authHeader = request.headers['authorization'];
+        if (!authHeader) {
+            throw new common_1.UnauthorizedException('Authorization header is missing or malformed');
+        }
+        ;
         const token = authHeader.split(' ')[1];
         if (!token) {
             throw new common_1.UnauthorizedException('token not found');
@@ -28,12 +32,6 @@ let AuthGuard = class AuthGuard {
             const payload = this.jwtService.verify(token, { secret });
             payload.iat = new Date(payload.iat * 1000);
             payload.exp = new Date(payload.exp * 1000);
-            if (payload.isAdmin) {
-                payload.roles = ['admin'];
-            }
-            else {
-                payload.roles = ['user'];
-            }
             request.user = payload;
             console.log(request.user);
             return true;

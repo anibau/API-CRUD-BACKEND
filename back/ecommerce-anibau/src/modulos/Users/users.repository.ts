@@ -7,7 +7,7 @@ import { CreateUserDto } from './CreateUserDto';
 @Injectable()
 export class UsersRepository {
   constructor(@InjectRepository(Users) private userRepository: Repository<Users>){}
- 
+  //* GET/USERS 
   async getUser(): Promise<Users[]> {
     const users= await this.userRepository.find({select:['id', 'name', 'email', 'phone', 'country', 'address', 'city', 'isAdmin'] ,relations:{orders:true}});
     if(!users.length){
@@ -15,10 +15,10 @@ export class UsersRepository {
     }
     return users 
   }
-
+  //* GET/USERS/:ID
   async getUserbyId(id:string){
     //     Cuando se realice una búsqueda por ID (getUserById), debes devolver:
-// Los campos básicos del usuario (como id, name, email, etc. menos password).
+    // Los campos básicos del usuario (como id, name, email, etc. menos password).
     const user= await this.userRepository.findOne({where:{id:id}, relations:{orders:true}});
     if(!user){
       throw new NotFoundException(`el usuario con id ${id} no existe`)
@@ -34,7 +34,7 @@ export class UsersRepository {
     return {...restUser, orders:ordenes}    
    
   }
-
+  //* PUT/USERS/:ID
   async updateUser(id: string, dataUser: CreateUserDto): Promise<string>{
     //buscar usuario por id
     const user= await this.userRepository.findOne({where:{id:id}, relations:{orders:true}});
@@ -46,6 +46,7 @@ export class UsersRepository {
     await this.userRepository.save(user);
     return `usuario con id ${id} actualizado correctamente`
   }
+  //* DELETE/USERS/:ID
   async deleteUser(id:string){
     const user= await this.userRepository.findOne({where:{id:id}});
     if(!user){
@@ -54,7 +55,7 @@ export class UsersRepository {
     await this.userRepository.remove(user);
     return `el usuario con id ${id} fue eliminado exitosamente`
   }
-  //solicitud GET con QUERY PARAMS Y PAGINACION
+  //! solicitud GET con QUERY PARAMS Y PAGINACION
   async getUserbyQueries(page: number=1, limit: number=5) {
     const initialIndex = (page - 1) * limit;
     const lastIndex = initialIndex + limit;
@@ -62,4 +63,5 @@ export class UsersRepository {
 
     return users.slice(initialIndex, lastIndex);
   }
+  
 }

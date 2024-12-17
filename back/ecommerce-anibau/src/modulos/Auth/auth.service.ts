@@ -13,6 +13,7 @@ export class AuthService {
   constructor(@InjectRepository(Users) private usersRepository: Repository<Users>,
 private readonly jwtService: JwtService) {}
 
+  //* POST/AUTH/SIGNUP
    async postSignup(user:CreateUserDto) {
     //verificar si el email ya existe, el password existe antes de crear el user
     const dbuser= await this.usersRepository.findOne({where:{email: user.email}});
@@ -37,7 +38,7 @@ private readonly jwtService: JwtService) {}
     return dataUser
   }
 
-
+  //* POST/AUTH/SIGNIN
   async getLogin(data:LoginUserDto) {
     const user:Users = await this.usersRepository.findOne({where:{email: data.email}});
     if(!user){
@@ -58,12 +59,22 @@ private readonly jwtService: JwtService) {}
 
     return {message:"User logged  in successfully", token}
     }
+//! SCRIPT PARA CREACION DE ADMIN 
+    async createAdminUser() {
+      const existingAdmin = await this.usersRepository.findOne({ where: { isAdmin: true } });
+      if (!existingAdmin) {
+        const adminUser = new Users();
+        adminUser.name = 'Default Admin';
+        adminUser.email = process.env.ADMIN_EMAIL;
+        adminUser.password = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
+        adminUser.address= 'calle admin 777';
+        adminUser.city= 'peruadmin';
+        adminUser.country='peruadmin';
+        adminUser.phone= 124587;
+        adminUser.isAdmin = true;
+        await this.usersRepository.save(adminUser);
+        console.log('Admin user created');
+      }
+    }
   }
   
-  // const user = users.find(
-  //   (user) => user.email === data.email && user.password === data.password,
-  // );
-  // if (!user) {
-  //   throw new Error('Email o password incorrectos');
-  // }
-  // return user;

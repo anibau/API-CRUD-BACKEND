@@ -6,10 +6,12 @@ import { CreateUserDto } from './CreateUserDto';
 @Injectable()
 export class UsersService {
   constructor(private userRepository: UsersRepository) {}
+  
+  //* GET/USERS 
   async getUsers():Promise<Users[]>{
     return await this.userRepository.getUser();
   }
-  
+  //* GET/USERS/:ID
   async getUserbyId(id: string) {
     // const users = this.userRepository.getUser();
     // const user: Users = (await users).find((user) => user.id === id);
@@ -21,13 +23,7 @@ export class UsersService {
     return this.userRepository.getUserbyId(id)
   
   }
-  // async createUser(body: CreateUserDto):Promise<Users> {
-  //   // const users: Users[] = await this.userRepository.getUser();
-  //   // const id = users.length + 1;
-  //   // users.push({ id, ...body });
-  //   // return { id, ...body };
-  //   return this.userRepository.createUser(body)
-  // }
+  //* PUT/USERS/:ID
   async updateUser(id: string, data: CreateUserDto) {
     // const users: Users[] = await this.userRepository.getUser();
     // const user: Users = users.find((user) => user.id === id);
@@ -42,6 +38,7 @@ export class UsersService {
     // return `ùsuario ${id} actualizado exitosamente`;
     return this.userRepository.updateUser(id, data)
   }
+  //* DELETE/USERS/:ID
   async deleteUser(id: string) {
     // const users: Users[] = await this.userRepository.getUser();
     // const user: Users[] = users.filter((user) => user.id !== id);
@@ -49,7 +46,7 @@ export class UsersService {
     // return `ùsuario ${id} eliminado exitosamente`;
     return this.userRepository.deleteUser(id)
   }
-  //solicitud GET con QUERY PARAMS Y PAGINACION
+  //! solicitud GET con QUERY PARAMS Y PAGINACION
   async getUserbyQueryParams(page: number, limit: number) {
     return this.userRepository.getUserbyQueries(page, limit);
   }

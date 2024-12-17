@@ -5,7 +5,7 @@ import { Products } from "./product.entity";
 import { Categories } from "../categories/categories.entity";
 import { getRepositoryToken } from "@nestjs/typeorm";
 
-describe('productRepository testing', ()=>{
+describe('productRepository testing unitario', ()=>{
     let productRepository:ProductRepository;
     let mockProductRepository: Partial<Repository<Products>>;
     let mockCategoriesRepository: Partial<Repository<Categories>>;

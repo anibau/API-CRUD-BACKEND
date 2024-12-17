@@ -14,7 +14,7 @@ export class OrderRepository{
 @InjectRepository(OrderDetails) private orderDetailRepository: Repository<OrderDetails>,
 @InjectRepository(Products) private productRepository: Repository<Products>){}
 
-    
+    //* GET/ORDERS
     async getOrderAll(){
         const orders= await this.orderRepository.find({relations:{ user: true, orderDetails:{products:true}}});
         if(!orders.length){
@@ -22,6 +22,7 @@ export class OrderRepository{
         };
         return orders
    }
+    //* GET/ORDERS/:ID
    async getOrder(id:string){
 
     const orders= await this.orderRepository.findOne({where:{id: id},relations:{ user: true, orderDetails:{products:true}}});
@@ -29,10 +30,11 @@ export class OrderRepository{
        throw new NotFoundException(`no se encontró la order con id ${id}`)
     };
     return orders
-}
+    }
+    //* POST/ORDERS
     async addOrder(data:CreateOrderDto){
         //1. busca el uuario por  id
-        const user= await this.userRepository.findOne({where:{id:data.userId as unknown as string}});
+        const user= await this.userRepository.findOne({where:{id:data.userId as unknown as string}, select:['id', 'name', 'email', 'phone', 'country', 'address', 'city']});
         if(!user){
             throw new NotFoundException(`usuario con id ${data.userId} no encontrado`)
         }

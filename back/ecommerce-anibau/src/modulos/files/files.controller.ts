@@ -7,6 +7,7 @@ import { AuthGuard } from "../Auth/auth.guard";
 export class FilesController{
     constructor(private readonly filesService: FilesService){}
 
+    //* POST/FILES/UPLOADIMAGE/:ID
     @Post('uploadImage/:id')
     @UseInterceptors(FileInterceptor('image'))
     @UseGuards(AuthGuard)
