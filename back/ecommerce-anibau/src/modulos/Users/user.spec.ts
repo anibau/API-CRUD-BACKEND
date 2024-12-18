@@ -2,7 +2,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { UsersRepository } from "./users.repository";
 import { UsersService } from "./users.service";
 import { Users } from "./user.entity";
-import { CreateUserDto } from "./CreateUserDto";
+import { CreateUserDto } from "./User.dto";
 
 describe('pruebas unitarias UserService', ()=>{
     let userService:UsersService;

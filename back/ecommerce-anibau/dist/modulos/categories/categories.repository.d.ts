@@ -1,6 +1,6 @@
 import { Categories } from "./categories.entity";
 import { Repository } from "typeorm";
-import { CategorieDto } from "./categorie.dto";
+import { CategorieDto } from "./categories.dto";
 export declare class CategoriesRepository {
     private categoriesRepository;
     constructor(categoriesRepository: Repository<Categories>);

@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginUserDto } from './LoginUserDto';
-import { CreateUserDto } from '../Users/CreateUserDto';
+import { LoginUserDto } from './LoginUser.dto';
+import { CreateUserDto } from '../Users/User.dto';
 import { validateUser } from '../../Utils/validateUser';
 
 @Controller('auth')

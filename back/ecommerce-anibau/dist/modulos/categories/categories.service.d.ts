@@ -1,6 +1,6 @@
 import { CategoriesRepository } from "./categories.repository";
 import { Categories } from "./categories.entity";
-import { CategorieDto } from "./categorie.dto";
+import { CategorieDto } from "./categories.dto";
 export declare class CategoriesService {
     private readonly categoriesRepository;
     constructor(categoriesRepository: CategoriesRepository);

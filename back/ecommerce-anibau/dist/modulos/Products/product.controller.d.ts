@@ -1,6 +1,6 @@
 import { ProductService } from './product.service';
 import { Products } from './product.entity';
-import { ProductDto } from './productDto';
+import { ProductDto } from './product.dto';
 export declare class ProductsController {
     private readonly productsService;
     constructor(productsService: ProductService);

@@ -13,11 +13,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const auth_guard_1 = require("../Auth/auth.guard");
 const validateUser_1 = require("../../Utils/validateUser");
-const CreateUserDto_1 = require("./CreateUserDto");
+const User_dto_1 = require("./User.dto");
 const roles_decorator_1 = require("../Auth/roles.decorator");
 const roles_guard_1 = require("../Auth/roles.guard");
 let UsersController = class UsersController {
@@ -76,6 +77,7 @@ __decorate([
     (0, roles_decorator_1.Roles)(roles_decorator_1.Role.Admin),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard, roles_guard_1.RolesGuard),
     (0, common_1.HttpCode)(200),
+    openapi.ApiResponse({ status: 200, type: [require("./user.entity").Users] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -83,6 +85,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)(),
     (0, common_1.HttpCode)(200),
+    openapi.ApiResponse({ status: 200, type: [require("./user.entity").Users] }),
     __param(0, (0, common_1.Query)('page')),
     __param(1, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
@@ -93,6 +96,7 @@ __decorate([
     (0, common_1.Get)(':id'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(200),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -102,16 +106,18 @@ __decorate([
     (0, common_1.Put)(':id'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(200),
+    openapi.ApiResponse({ status: 200, type: String }),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, CreateUserDto_1.CreateUserDto]),
+    __metadata("design:paramtypes", [String, User_dto_1.CreateUserDto]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "updateUser", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(200),
+    openapi.ApiResponse({ status: 200, type: String }),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

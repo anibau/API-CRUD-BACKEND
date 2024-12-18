@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderDetailController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const orderDetail_service_1 = require("./orderDetail.service");
 const orderDetail_dto_1 = require("./orderDetail.dto");
@@ -49,6 +50,7 @@ exports.OrderDetailController = OrderDetailController;
 __decorate([
     (0, common_1.Get)(),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    openapi.ApiResponse({ status: common_1.HttpStatus.OK, type: [require("./orderDetail.entity").OrderDetails] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -56,6 +58,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)(':id'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    openapi.ApiResponse({ status: common_1.HttpStatus.OK, type: require("./orderDetail.entity").OrderDetails }),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -64,6 +67,7 @@ __decorate([
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
+    openapi.ApiResponse({ status: common_1.HttpStatus.CREATED, type: require("./orderDetail.entity").OrderDetails }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [orderDetail_dto_1.OrderDetailDto]),

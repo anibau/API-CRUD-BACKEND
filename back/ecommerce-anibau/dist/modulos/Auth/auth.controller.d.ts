@@ -1,6 +1,6 @@
 import { AuthService } from './auth.service';
-import { LoginUserDto } from './LoginUserDto';
-import { CreateUserDto } from '../Users/CreateUserDto';
+import { LoginUserDto } from './LoginUser.dto';
+import { CreateUserDto } from '../Users/User.dto';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);

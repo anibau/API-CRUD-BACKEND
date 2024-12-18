@@ -1,7 +1,7 @@
 import { Products } from './product.entity';
 import { Repository } from 'typeorm';
 import { Categories } from '../categories/categories.entity';
-import { ProductDto } from './productDto';
+import { ProductDto } from './product.dto';
 export declare class ProductRepository {
     private productRepository;
     private categoriesRepository;

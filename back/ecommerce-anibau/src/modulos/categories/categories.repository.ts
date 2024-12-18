@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Categories } from "./categories.entity";
 import { Repository } from "typeorm";
 import * as data from '../../Utils/data.json'
-import { CategorieDto } from "./categorie.dto";
+import { CategorieDto } from "./categories.dto";
 
 @Injectable()
 export class CategoriesRepository{

@@ -5,7 +5,7 @@ import { Repository } from "typeorm";
 import { Users } from "../Users/user.entity";
 import { OrderDetails } from "../orderDetails/orderDetail.entity";
 import { Products } from "../Products/product.entity";
-import { CreateOrderDto } from "./CreateOrderDto";
+import { CreateOrderDto } from "./order.dto";
 
 @Injectable()
 export class OrderRepository{

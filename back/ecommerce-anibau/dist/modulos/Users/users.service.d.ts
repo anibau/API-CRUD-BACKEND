@@ -1,6 +1,6 @@
 import { UsersRepository } from './users.repository';
 import { Users } from './user.entity';
-import { CreateUserDto } from './CreateUserDto';
+import { CreateUserDto } from './User.dto';
 export declare class UsersService {
     private userRepository;
     constructor(userRepository: UsersRepository);

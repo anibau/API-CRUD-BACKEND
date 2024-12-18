@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FilesController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const files_service_1 = require("./files.service");
 const platform_express_1 = require("@nestjs/platform-express");
@@ -35,6 +36,7 @@ __decorate([
     (0, common_1.Post)('uploadImage/:id'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('image')),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.UploadedFile)(new common_1.ParseFilePipe({ validators: [
             new common_1.MaxFileSizeValidator({ maxSize: 200000, message: 'el archivo debe ser menor a 200k'

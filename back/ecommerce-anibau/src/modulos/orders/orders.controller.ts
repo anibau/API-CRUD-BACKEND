@@ -1,6 +1,6 @@
 import { BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, UseGuards } from "@nestjs/common";
 import { OrdersService } from "./orders.service";
-import { CreateOrderDto } from "./CreateOrderDto";
+import { CreateOrderDto } from "./order.dto";
 import { AuthGuard } from "../Auth/auth.guard";
 
 @Controller('orders')

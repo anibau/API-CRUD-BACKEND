@@ -13,9 +13,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoriesController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const categories_service_1 = require("./categories.service");
-const categorie_dto_1 = require("./categorie.dto");
+const categories_dto_1 = require("./categories.dto");
 let CategoriesController = class CategoriesController {
     constructor(categoriesService) {
         this.categoriesService = categoriesService;
@@ -44,6 +45,7 @@ exports.CategoriesController = CategoriesController;
 __decorate([
     (0, common_1.Get)(),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    openapi.ApiResponse({ status: common_1.HttpStatus.OK, type: [require("./categories.entity").Categories] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -51,6 +53,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)('seeder'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    openapi.ApiResponse({ status: common_1.HttpStatus.OK, type: String }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -58,9 +61,10 @@ __decorate([
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
+    openapi.ApiResponse({ status: common_1.HttpStatus.CREATED, type: require("./categories.entity").Categories }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [categorie_dto_1.CategorieDto]),
+    __metadata("design:paramtypes", [categories_dto_1.CategorieDto]),
     __metadata("design:returntype", Promise)
 ], CategoriesController.prototype, "addCategories", null);
 exports.CategoriesController = CategoriesController = __decorate([

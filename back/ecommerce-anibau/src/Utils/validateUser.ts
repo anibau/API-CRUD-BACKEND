@@ -1,4 +1,4 @@
-import { CreateUserDto } from "src/modulos/Users/CreateUserDto";
+import { CreateUserDto } from "src/modulos/Users/User.dto";
 
 export function validateUser(data:CreateUserDto):boolean{
     const validateU= 

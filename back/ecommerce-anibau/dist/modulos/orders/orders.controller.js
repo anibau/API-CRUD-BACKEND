@@ -13,9 +13,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrdesController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const orders_service_1 = require("./orders.service");
-const CreateOrderDto_1 = require("./CreateOrderDto");
+const order_dto_1 = require("./order.dto");
 const auth_guard_1 = require("../Auth/auth.guard");
 let OrdesController = class OrdesController {
     constructor(orderService) {
@@ -50,6 +51,7 @@ exports.OrdesController = OrdesController;
 __decorate([
     (0, common_1.Get)(),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    openapi.ApiResponse({ status: common_1.HttpStatus.OK, type: [require("./orders.entity").Orders] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -58,6 +60,7 @@ __decorate([
     (0, common_1.Get)(':id'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    openapi.ApiResponse({ status: common_1.HttpStatus.OK, type: require("./orders.entity").Orders }),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -67,9 +70,10 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
+    openapi.ApiResponse({ status: common_1.HttpStatus.CREATED, type: require("./orders.entity").Orders }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [CreateOrderDto_1.CreateOrderDto]),
+    __metadata("design:paramtypes", [order_dto_1.CreateOrderDto]),
     __metadata("design:returntype", Promise)
 ], OrdesController.prototype, "addOrder", null);
 exports.OrdesController = OrdesController = __decorate([

@@ -1,6 +1,6 @@
 import { Users } from './user.entity';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from './CreateUserDto';
+import { CreateUserDto } from './User.dto';
 export declare class UsersRepository {
     private userRepository;
     constructor(userRepository: Repository<Users>);
