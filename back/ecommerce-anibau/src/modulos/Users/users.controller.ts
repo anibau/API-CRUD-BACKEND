@@ -19,12 +19,15 @@ import { validateUser } from '../../Utils/validateUser';
 import { CreateUserDto } from './User.dto';
 import { Role, Roles } from '../Auth/roles.decorator';
 import { RolesGuard } from '../Auth/roles.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   //* GET/USERS 
+  @ApiBearerAuth()
   @Get()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
@@ -36,9 +39,8 @@ export class UsersController {
       throw new BadRequestException('Error al obtener los usuarios')
     }
   }
-  //!solicitud GET con QUERY PARAMS Y PAGINACION
-  @Get()
-  //@UseGuards(AuthGuard)
+  //**solicitud GET con QUERY PARAMS Y PAGINACION
+  @Get('/queries')
   @HttpCode(200)
   getUserbyQuery(@Query('page') page: number= 1, @Query('limit') limit: number = 5) {
     try{
@@ -48,6 +50,7 @@ export class UsersController {
     }
   }
   //* GET/USERS/:ID
+  @ApiBearerAuth()
   @Get(':id')
   @UseGuards(AuthGuard)
   @HttpCode(200)
@@ -59,6 +62,7 @@ export class UsersController {
     }
   }
   //* PUT/USERS/:ID
+  @ApiBearerAuth()
   @Put(':id')
   @UseGuards(AuthGuard)
   @HttpCode(200)
@@ -75,6 +79,7 @@ export class UsersController {
     }
   }
   //* DELETE/USERS/:ID
+  @ApiBearerAuth()
   @Delete(':id')
   @UseGuards(AuthGuard)
   @HttpCode(200)

@@ -17,6 +17,7 @@ const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const orderDetail_service_1 = require("./orderDetail.service");
 const orderDetail_dto_1 = require("./orderDetail.dto");
+const swagger_1 = require("@nestjs/swagger");
 let OrderDetailController = class OrderDetailController {
     constructor(orderDetailService) {
         this.orderDetailService = orderDetailService;
@@ -74,6 +75,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], OrderDetailController.prototype, "addDetail", null);
 exports.OrderDetailController = OrderDetailController = __decorate([
+    (0, swagger_1.ApiTags)('OrderDetails'),
     (0, common_1.Controller)('orderDetail'),
     __metadata("design:paramtypes", [orderDetail_service_1.OrderDetailService])
 ], OrderDetailController);

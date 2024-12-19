@@ -14,17 +14,24 @@ const openapi = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("../Users/user.entity");
 const orderDetail_entity_1 = require("../orderDetails/orderDetail.entity");
+const swagger_1 = require("@nestjs/swagger");
 let Orders = class Orders {
     static _OPENAPI_METADATA_FACTORY() {
-        return { id: { required: true, type: () => String }, user: { required: true, type: () => require("../Users/user.entity").Users }, date: { required: true, type: () => Date }, orderDetails: { required: true, type: () => require("../orderDetails/orderDetail.entity").OrderDetails } };
+        return { id: { required: true, type: () => String }, user: { required: true, type: () => require("../Users/user.entity").Users }, date: { required: true, type: () => Date, description: "Fecha en la que fue generada la orden" }, orderDetails: { required: true, type: () => require("../orderDetails/orderDetail.entity").OrderDetails, description: "Relacion  de OrderDetails" } };
     }
 };
 exports.Orders = Orders;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Id tipo UUID autogenerado',
+    }),
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], Orders.prototype, "id", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Relacion de Users al que pertenece'
+    }),
     (0, typeorm_1.ManyToOne)(() => user_entity_1.Users, (user) => user.orders),
     __metadata("design:type", user_entity_1.Users)
 ], Orders.prototype, "user", void 0);

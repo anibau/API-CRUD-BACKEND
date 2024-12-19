@@ -15,7 +15,7 @@ const typeorm_1 = require("typeorm");
 const product_entity_1 = require("../Products/product.entity");
 let Categories = class Categories {
     static _OPENAPI_METADATA_FACTORY() {
-        return { id: { required: true, type: () => String }, name: { required: true, type: () => String }, products: { required: true, type: () => [require("../Products/product.entity").Products] } };
+        return { id: { required: true, type: () => String, description: "Id de formato UUID autogenerado" }, name: { required: true, type: () => String, description: "Nombre de categoria" }, products: { required: true, type: () => [require("../Products/product.entity").Products], description: "Relaci\u00F3n: N:1 con products." } };
     }
 };
 exports.Categories = Categories;

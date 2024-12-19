@@ -29,6 +29,7 @@ async function bootstrap() {
                         .setTitle('api-ecommerce-backend')
                         .setDescription('Esta es una Api creada con NestJS desarrollada como proyecto del modulo 4 de la especializacion backend de la carrera FullStack Developer de Henry')
                         .setVersion('1.0')
+                        .addBearerAuth()
                         .build();
   const document= SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('API', app, document)

@@ -20,7 +20,9 @@ import { validateProduct } from '../../Utils/validateProduct';
 import { ProductDto } from './product.dto';
 import { Role, Roles } from '../Auth/roles.decorator';
 import { RolesGuard } from '../Auth/roles.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductService) {}
@@ -28,7 +30,7 @@ export class ProductsController {
   //* GET/PRODUCTS/
   @Get()
   @HttpCode(HttpStatus.OK)
-  getProducts() {
+  async getProducts() {
     try{
       return this.productsService.getProduct();
     } catch{
@@ -65,6 +67,7 @@ export class ProductsController {
     }
   }
   //* PUT/PRODUCTS
+  @ApiBearerAuth()
   @Put(':id')
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)

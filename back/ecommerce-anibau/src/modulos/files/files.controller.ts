@@ -2,12 +2,15 @@ import { BadRequestException, Controller, FileTypeValidator, MaxFileSizeValidato
 import { FilesService } from "./files.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { AuthGuard } from "../Auth/auth.guard";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Files')
 @Controller('files')
 export class FilesController{
     constructor(private readonly filesService: FilesService){}
 
     //* POST/FILES/UPLOADIMAGE/:ID
+    @ApiBearerAuth()
     @Post('uploadImage/:id')
     @UseInterceptors(FileInterceptor('image'))
     @UseGuards(AuthGuard)

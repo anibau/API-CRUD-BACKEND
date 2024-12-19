@@ -2,7 +2,9 @@ import { BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Param
 import { OrdersService } from "./orders.service";
 import { CreateOrderDto } from "./order.dto";
 import { AuthGuard } from "../Auth/auth.guard";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Orders')
 @Controller('orders')
 export class OrdesController {
     constructor(private readonly orderService:OrdersService){}
@@ -17,6 +19,7 @@ export class OrdesController {
         }
     }
 //* GET/ORDERS/:ID
+    @ApiBearerAuth()
     @Get(':id')
     @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.OK)
@@ -28,6 +31,7 @@ export class OrdesController {
         }
     }
     //* POST/ORDERS
+    @ApiBearerAuth()
     @Post()
     @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.CREATED)

@@ -16,7 +16,7 @@ const orders_entity_1 = require("../orders/orders.entity");
 const product_entity_1 = require("../Products/product.entity");
 let OrderDetails = class OrderDetails {
     static _OPENAPI_METADATA_FACTORY() {
-        return { id: { required: true, type: () => String }, price: { required: true, type: () => Number }, order: { required: true, type: () => require("../orders/orders.entity").Orders }, products: { required: true, type: () => [require("../Products/product.entity").Products] } };
+        return { id: { required: true, type: () => String, description: "Id de formato UUID autogenerado" }, price: { required: true, type: () => Number, description: "price: debe ser un n\u00FAmero decimal con una precisi\u00F3n de 10 d\u00EDgitos y una escala de 2 d\u00EDgitos. No puede ser nulo." }, order: { required: true, type: () => require("../orders/orders.entity").Orders, description: "order_id: Relaci\u00F3n 1:1 con orders." }, products: { required: true, type: () => [require("../Products/product.entity").Products], description: "Relaci\u00F3n N:N con products." } };
     }
 };
 exports.OrderDetails = OrderDetails;

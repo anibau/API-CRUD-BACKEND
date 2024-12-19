@@ -2,7 +2,9 @@ import { BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Post 
 import { CategoriesService } from "./categories.service";
 import { Categories } from "./categories.entity";
 import { CategorieDto } from "./categories.dto";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Categories')
 @Controller('categories')
 export class CategoriesController{
     constructor(private readonly categoriesService:CategoriesService){}

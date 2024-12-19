@@ -14,6 +14,7 @@ const openapi = require("@nestjs/swagger");
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 const product_entity_1 = require("../Products/product.entity");
+const swagger_1 = require("@nestjs/swagger");
 class CreateOrderDto {
     static _OPENAPI_METADATA_FACTORY() {
         return { userId: { required: true, type: () => String }, products: { required: true, type: () => [Object], minItems: 1 } };
@@ -21,11 +22,19 @@ class CreateOrderDto {
 }
 exports.CreateOrderDto = CreateOrderDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Id de usuario en formato UUID',
+        example: '"id":"20ede140-c53e-4b0b-858a-abc19cc6e514"'
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsUUID)(),
     __metadata("design:type", String)
 ], CreateOrderDto.prototype, "userId", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Array de Ids de productos en formato UUID',
+        example: '[{ "id":"60ede140-c53e-4b0b-858a-abc19cc6e514"}]'
+    }),
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ArrayNotEmpty)(),
     (0, class_validator_1.ValidateNested)({ each: true }),

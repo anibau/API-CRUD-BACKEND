@@ -21,6 +21,7 @@ const validateUser_1 = require("../../Utils/validateUser");
 const User_dto_1 = require("./User.dto");
 const roles_decorator_1 = require("../Auth/roles.decorator");
 const roles_guard_1 = require("../Auth/roles.guard");
+const swagger_1 = require("@nestjs/swagger");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -73,6 +74,7 @@ let UsersController = class UsersController {
 };
 exports.UsersController = UsersController;
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)(),
     (0, roles_decorator_1.Roles)(roles_decorator_1.Role.Admin),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard, roles_guard_1.RolesGuard),
@@ -83,7 +85,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getUsers", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('/queries'),
     (0, common_1.HttpCode)(200),
     openapi.ApiResponse({ status: 200, type: [require("./user.entity").Users] }),
     __param(0, (0, common_1.Query)('page')),
@@ -93,6 +95,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUserbyQuery", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)(':id'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(200),
@@ -103,6 +106,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUserbyId", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Put)(':id'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(200),
@@ -114,6 +118,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "updateUser", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Delete)(':id'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(200),
@@ -124,6 +129,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "deleteUser", null);
 exports.UsersController = UsersController = __decorate([
+    (0, swagger_1.ApiTags)('Users'),
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);

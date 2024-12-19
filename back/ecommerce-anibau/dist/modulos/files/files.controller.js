@@ -18,6 +18,7 @@ const common_1 = require("@nestjs/common");
 const files_service_1 = require("./files.service");
 const platform_express_1 = require("@nestjs/platform-express");
 const auth_guard_1 = require("../Auth/auth.guard");
+const swagger_1 = require("@nestjs/swagger");
 let FilesController = class FilesController {
     constructor(filesService) {
         this.filesService = filesService;
@@ -33,6 +34,7 @@ let FilesController = class FilesController {
 };
 exports.FilesController = FilesController;
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Post)('uploadImage/:id'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('image')),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
@@ -48,6 +50,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], FilesController.prototype, "uploadImage", null);
 exports.FilesController = FilesController = __decorate([
+    (0, swagger_1.ApiTags)('Files'),
     (0, common_1.Controller)('files'),
     __metadata("design:paramtypes", [files_service_1.FilesService])
 ], FilesController);

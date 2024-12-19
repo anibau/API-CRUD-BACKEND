@@ -2,7 +2,9 @@ import { BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Param
 import { OrderDetailService } from "./orderDetail.service";
 import { OrderDetails } from "./orderDetail.entity";
 import { OrderDetailDto } from "./orderDetail.dto";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('OrderDetails')
 @Controller('orderDetail')
 export class OrderDetailController{
     constructor(private readonly orderDetailService: OrderDetailService){}

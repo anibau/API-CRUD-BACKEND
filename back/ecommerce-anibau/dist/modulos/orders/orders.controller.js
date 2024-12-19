@@ -18,6 +18,7 @@ const common_1 = require("@nestjs/common");
 const orders_service_1 = require("./orders.service");
 const order_dto_1 = require("./order.dto");
 const auth_guard_1 = require("../Auth/auth.guard");
+const swagger_1 = require("@nestjs/swagger");
 let OrdesController = class OrdesController {
     constructor(orderService) {
         this.orderService = orderService;
@@ -57,6 +58,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], OrdesController.prototype, "getOrderall", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)(':id'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
@@ -67,6 +69,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], OrdesController.prototype, "getOrder", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
@@ -77,6 +80,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], OrdesController.prototype, "addOrder", null);
 exports.OrdesController = OrdesController = __decorate([
+    (0, swagger_1.ApiTags)('Orders'),
     (0, common_1.Controller)('orders'),
     __metadata("design:paramtypes", [orders_service_1.OrdersService])
 ], OrdesController);
