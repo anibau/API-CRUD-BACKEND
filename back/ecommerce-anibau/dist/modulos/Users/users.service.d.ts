@@ -4,7 +4,7 @@ import { CreateUserDto } from './User.dto';
 export declare class UsersService {
     private userRepository;
     constructor(userRepository: UsersRepository);
-    getUsers(): Promise<Users[]>;
+    getUsers(page: number, limit: number): Promise<Users[]>;
     getUserbyId(id: string): Promise<{
         orders: {
             id: string;
@@ -20,5 +20,4 @@ export declare class UsersService {
     }>;
     updateUser(id: string, data: CreateUserDto): Promise<string>;
     deleteUser(id: string): Promise<string>;
-    getUserbyQueryParams(page: number, limit: number): Promise<Users[]>;
 }

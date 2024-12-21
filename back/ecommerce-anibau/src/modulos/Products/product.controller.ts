@@ -11,6 +11,7 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
@@ -30,9 +31,9 @@ export class ProductsController {
   //* GET/PRODUCTS/
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getProducts() {
+  async getProducts(@Query('page') page:number=1, @Query('limit') limit:number=5) {
     try{
-      return this.productsService.getProduct();
+      return this.productsService.getProduct(page, limit);
     } catch{
       throw new BadRequestException('Error al obtener los products')
     }
@@ -55,7 +56,7 @@ export class ProductsController {
   }
   //* POST/PRODUCTS
   @Post()
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.CREATED)
   async createProduct(@Body() data: ProductDto): Promise<Products> {
     try{
@@ -88,7 +89,7 @@ export class ProductsController {
   }
   //* DELETE/PRODUCTS
   @Delete(':id')
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   deleteProduct(@Param('id', ParseUUIDPipe) id:string) {
     try{

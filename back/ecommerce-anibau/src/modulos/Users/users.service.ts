@@ -8,9 +8,10 @@ export class UsersService {
   constructor(private userRepository: UsersRepository) {}
   
   //* GET/USERS 
-  async getUsers():Promise<Users[]>{
-    return await this.userRepository.getUser();
+  async getUsers(page: number, limit: number):Promise<Users[]>{
+    return await this.userRepository.getUser(page, limit);
   }
+  
   //* GET/USERS/:ID
   async getUserbyId(id: string) {
     // const users = this.userRepository.getUser();
@@ -46,8 +47,5 @@ export class UsersService {
     // return `ùsuario ${id} eliminado exitosamente`;
     return this.userRepository.deleteUser(id)
   }
-  //! solicitud GET con QUERY PARAMS Y PAGINACION
-  async getUserbyQueryParams(page: number, limit: number) {
-    return this.userRepository.getUserbyQueries(page, limit);
-  }
+  
 }

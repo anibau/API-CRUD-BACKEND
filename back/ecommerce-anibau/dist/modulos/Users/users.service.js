@@ -16,8 +16,8 @@ let UsersService = class UsersService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
-    async getUsers() {
-        return await this.userRepository.getUser();
+    async getUsers(page, limit) {
+        return await this.userRepository.getUser(page, limit);
     }
     async getUserbyId(id) {
         return this.userRepository.getUserbyId(id);
@@ -27,9 +27,6 @@ let UsersService = class UsersService {
     }
     async deleteUser(id) {
         return this.userRepository.deleteUser(id);
-    }
-    async getUserbyQueryParams(page, limit) {
-        return this.userRepository.getUserbyQueries(page, limit);
     }
 };
 exports.UsersService = UsersService;

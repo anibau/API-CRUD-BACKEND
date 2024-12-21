@@ -28,7 +28,7 @@ let OrderRepository = class OrderRepository {
         this.productRepository = productRepository;
     }
     async getOrderAll() {
-        const orders = await this.orderRepository.find({ relations: { user: true, orderDetails: { products: true } } });
+        const orders = await this.orderRepository.find({ relations: { orderDetails: { products: true } } });
         if (!orders.length) {
             throw new common_1.NotFoundException('no se encontraron Ordenes con usuarios asociados');
         }
@@ -36,7 +36,7 @@ let OrderRepository = class OrderRepository {
         return orders;
     }
     async getOrder(id) {
-        const orders = await this.orderRepository.findOne({ where: { id: id }, relations: { user: true, orderDetails: { products: true } } });
+        const orders = await this.orderRepository.findOne({ where: { id: id }, relations: { orderDetails: { products: true } } });
         if (!orders) {
             throw new common_1.NotFoundException(`no se encontró la order con id ${id}`);
         }
@@ -68,7 +68,7 @@ let OrderRepository = class OrderRepository {
         const date = new Date();
         const newOrder = this.orderRepository.create({ ...data, date, user, orderDetails: orderDetail });
         await this.orderRepository.save(newOrder);
-        return this.orderRepository.findOne({ where: { id: newOrder.id }, relations: { user: true, orderDetails: { products: true } } });
+        return this.orderRepository.findOne({ where: { id: newOrder.id }, relations: { orderDetails: { products: true } } });
     }
 };
 exports.OrderRepository = OrderRepository;

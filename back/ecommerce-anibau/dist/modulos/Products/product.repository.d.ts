@@ -6,7 +6,7 @@ export declare class ProductRepository {
     private productRepository;
     private categoriesRepository;
     constructor(productRepository: Repository<Products>, categoriesRepository: Repository<Categories>);
-    getProducts(): Promise<Products[]>;
+    getProducts(page: number, limit: number): Promise<Products[]>;
     addProductJSON(): Promise<string>;
     getProductbyId(id: string): Promise<Products>;
     createProduct(product: ProductDto): Promise<Products>;

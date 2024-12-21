@@ -29,13 +29,14 @@ export class CreateUserDto {
     @IsNotEmpty()
     @IsString()
     @MinLength(8)
+    @MaxLength(15)
     @IsStrongPassword({
         minLowercase: 1,
         minUppercase: 1,
         minNumbers: 1,
         minSymbols: 1,
     })
-    @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/, {
+    @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,15}$/, {
         message:
           'password must be 8-15 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character (!@#$%^&*)',
       })
@@ -47,10 +48,10 @@ export class CreateUserDto {
     })
     @IsNotEmpty()
     @IsString()
-    //@MaxLength(15)
+    @MaxLength(15)
     @MinLength(8)
     @ValidateIf(o => o.confirmPassword !== undefined)
-    @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/, {
+    @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,15}$/, {
     message:
     'password must match the required format',
     })

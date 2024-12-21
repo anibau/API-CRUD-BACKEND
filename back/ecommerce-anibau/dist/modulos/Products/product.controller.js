@@ -26,9 +26,9 @@ let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
     }
-    async getProducts() {
+    async getProducts(page = 1, limit = 5) {
         try {
-            return this.productsService.getProduct();
+            return this.productsService.getProduct(page, limit);
         }
         catch {
             throw new common_1.BadRequestException('Error al obtener los products');
@@ -85,8 +85,10 @@ __decorate([
     (0, common_1.Get)(),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     openapi.ApiResponse({ status: common_1.HttpStatus.OK, type: [require("./product.entity").Products] }),
+    __param(0, (0, common_1.Query)('page')),
+    __param(1, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "getProducts", null);
 __decorate([
@@ -107,6 +109,7 @@ __decorate([
 ], ProductsController.prototype, "getProductbyId", null);
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     openapi.ApiResponse({ status: common_1.HttpStatus.CREATED, type: require("./product.entity").Products }),
     __param(0, (0, common_1.Body)()),
@@ -129,6 +132,7 @@ __decorate([
 ], ProductsController.prototype, "updateProduct", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     openapi.ApiResponse({ status: common_1.HttpStatus.OK, type: String }),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),

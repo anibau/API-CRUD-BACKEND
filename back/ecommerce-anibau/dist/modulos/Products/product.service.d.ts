@@ -4,7 +4,7 @@ import { ProductDto } from './product.dto';
 export declare class ProductService {
     private productRepository;
     constructor(productRepository: ProductRepository);
-    getProduct(): Promise<Products[]>;
+    getProduct(page: number, limit: number): Promise<Products[]>;
     addProductJSON(): Promise<string>;
     getProductbyId(id: string): Promise<Products>;
     createProduct(body: ProductDto): Promise<Products>;

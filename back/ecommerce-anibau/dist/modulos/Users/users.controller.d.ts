@@ -4,8 +4,7 @@ import { CreateUserDto } from './User.dto';
 export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
-    getUsers(): Promise<Users[]>;
-    getUserbyQuery(page?: number, limit?: number): Promise<Users[]>;
+    getUsers(page?: number, limit?: number): Promise<Users[]>;
     getUserbyId(id: string): Promise<{
         orders: {
             id: string;

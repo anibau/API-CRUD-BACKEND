@@ -21,12 +21,14 @@ let UsersRepository = class UsersRepository {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
-    async getUser() {
+    async getUser(page = 1, limit = 5) {
+        const initialIndex = (page - 1) * limit;
+        const lastIndex = initialIndex + limit;
         const users = await this.userRepository.find({ select: ['id', 'name', 'email', 'phone', 'country', 'address', 'city', 'isAdmin'], relations: { orders: true } });
         if (!users.length) {
             throw new common_1.NotFoundException('no se encontraron usuarios');
         }
-        return users;
+        return users.slice(initialIndex, lastIndex);
     }
     async getUserbyId(id) {
         const user = await this.userRepository.findOne({ where: { id: id }, relations: { orders: true } });
@@ -56,12 +58,6 @@ let UsersRepository = class UsersRepository {
         }
         await this.userRepository.remove(user);
         return `el usuario con id ${id} fue eliminado exitosamente`;
-    }
-    async getUserbyQueries(page = 1, limit = 5) {
-        const initialIndex = (page - 1) * limit;
-        const lastIndex = initialIndex + limit;
-        const users = await this.userRepository.find();
-        return users.slice(initialIndex, lastIndex);
     }
 };
 exports.UsersRepository = UsersRepository;

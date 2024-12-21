@@ -8,13 +8,17 @@ import { CreateUserDto } from './User.dto';
 export class UsersRepository {
   constructor(@InjectRepository(Users) private userRepository: Repository<Users>){}
   //* GET/USERS 
-  async getUser(): Promise<Users[]> {
+  async getUser(page: number=1, limit:number=5): Promise<Users[]> {
+    const initialIndex= (page-1)*limit;
+    const lastIndex= initialIndex+limit;
+
     const users= await this.userRepository.find({select:['id', 'name', 'email', 'phone', 'country', 'address', 'city', 'isAdmin'] ,relations:{orders:true}});
     if(!users.length){
       throw new NotFoundException('no se encontraron usuarios')
     }
-    return users 
+    return users.slice(initialIndex, lastIndex)
   }
+   
   //* GET/USERS/:ID
   async getUserbyId(id:string){
     //     Cuando se realice una búsqueda por ID (getUserById), debes devolver:
@@ -55,13 +59,6 @@ export class UsersRepository {
     await this.userRepository.remove(user);
     return `el usuario con id ${id} fue eliminado exitosamente`
   }
-  //! solicitud GET con QUERY PARAMS Y PAGINACION
-  async getUserbyQueries(page: number=1, limit: number=5) {
-    const initialIndex = (page - 1) * limit;
-    const lastIndex = initialIndex + limit;
-    const users= await this.userRepository.find();
-
-    return users.slice(initialIndex, lastIndex);
-  }
+ 
   
 }

@@ -8,7 +8,7 @@ import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 @Controller('orders')
 export class OrdesController {
     constructor(private readonly orderService:OrdersService){}
-//* GET/ORDERS
+//* EXTRA: GET/ORDERS
     @Get()
     @HttpCode(HttpStatus.OK)
     async getOrderall(){

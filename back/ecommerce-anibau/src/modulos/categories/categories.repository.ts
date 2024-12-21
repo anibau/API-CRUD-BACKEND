@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Categories } from "./categories.entity";
 import { Repository } from "typeorm";
@@ -24,7 +24,7 @@ export class CategoriesRepository{
             if(!category){
                 const newCategory= this.categoriesRepository.create({name:obj.categories});
                 await this.categoriesRepository.save(newCategory)
-            }
+            } else{throw new BadRequestException(`The category ${obj.categories} already exist`)}
         }; return 'las categorias fueron agregadas'
     }
     //* POST/CATEGORIES

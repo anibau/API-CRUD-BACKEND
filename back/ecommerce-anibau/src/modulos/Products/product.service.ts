@@ -8,8 +8,8 @@ export class ProductService {
   constructor(private productRepository: ProductRepository) {}
 
   //* GET/PRODUCTS/
-  async getProduct() {
-    return this.productRepository.getProducts();
+  async getProduct(page: number, limit: number) {
+    return this.productRepository.getProducts(page, limit);
   }
   //* GET/SEEDER
   async addProductJSON(){

@@ -12,10 +12,15 @@ export class ProductRepository {
   @InjectRepository(Categories) private categoriesRepository: Repository <Categories>
 ){}
   //* GET/PRODUCTS/
-  async getProducts() {
-    return this.productRepository.find({relations: {
-      category:true
-    }});
+  async getProducts(page:number, limit:number) {
+    const initialIndex= (page-1)*limit;
+    const lastIndex= initialIndex+limit;
+    
+    const products= await this.productRepository.find({relations:{category:true}});
+    if(!products){
+      throw new BadRequestException('no se encontraron productos')
+    }
+    return products.slice(initialIndex, lastIndex)
   }
   //* GET/SEEDER
   async addProductJSON(){
@@ -29,7 +34,7 @@ export class ProductRepository {
         }
         const newProduct= this.productRepository.create({...obj, category});
         await this.productRepository.save(newProduct)
-      }
+      } else{throw new BadRequestException(`The product ${obj.name} already exist`)}
     }; return 'productos cargados'
   }
   //* GET/PRODUCTS/:ID

@@ -34,8 +34,7 @@ private readonly jwtService: JwtService) {}
     await this.usersRepository.save(newUser);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {password, isAdmin, ...dataUser}= newUser;
-    console.log(password);
-    return dataUser
+    return dataUser 
   }
 
   //* POST/AUTH/SIGNIN
@@ -59,7 +58,7 @@ private readonly jwtService: JwtService) {}
 
     return {message:"User logged  in successfully", token}
     }
-//! SCRIPT PARA CREACION DE ADMIN 
+//** SCRIPT PARA CREACION DE ADMIN 
     async createAdminUser() {
       const existingAdmin = await this.usersRepository.findOne({ where: { isAdmin: true } });
       if (!existingAdmin) {

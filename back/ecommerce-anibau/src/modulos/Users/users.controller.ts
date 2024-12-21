@@ -26,29 +26,20 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  //* GET/USERS 
+  //* GET/USERS con QUERY PARAMS Y PAGINACION
   @ApiBearerAuth()
   @Get()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
   @HttpCode(200)
-  async getUsers():Promise<Users[]> {
+  async getUsers(@Query('page') page: number=1, @Query('limit') limit:number=5):Promise<Users[]> {
     try{
-      return await this.usersService.getUsers();
+      return await this.usersService.getUsers(page, limit);
     }catch{
       throw new BadRequestException('Error al obtener los usuarios')
     }
   }
-  //**solicitud GET con QUERY PARAMS Y PAGINACION
-  @Get('/queries')
-  @HttpCode(200)
-  getUserbyQuery(@Query('page') page: number= 1, @Query('limit') limit: number = 5) {
-    try{
-      return this.usersService.getUserbyQueryParams(page,limit);
-    }catch{
-      throw new BadRequestException('Error al obtener el producto por query ')
-    }
-  }
+ 
   //* GET/USERS/:ID
   @ApiBearerAuth()
   @Get(':id')

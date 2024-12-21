@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Orders } from "./orders.entity";
@@ -14,9 +15,9 @@ export class OrderRepository{
 @InjectRepository(OrderDetails) private orderDetailRepository: Repository<OrderDetails>,
 @InjectRepository(Products) private productRepository: Repository<Products>){}
 
-    //* GET/ORDERS
+    //* extra: GET/ORDERS
     async getOrderAll(){
-        const orders= await this.orderRepository.find({relations:{ user: true, orderDetails:{products:true}}});
+        const orders= await this.orderRepository.find({relations:{ orderDetails:{products:true}}});
         if(!orders.length){
            throw new NotFoundException('no se encontraron Ordenes con usuarios asociados')
         };
@@ -25,11 +26,11 @@ export class OrderRepository{
     //* GET/ORDERS/:ID
    async getOrder(id:string){
 
-    const orders= await this.orderRepository.findOne({where:{id: id},relations:{ user: true, orderDetails:{products:true}}});
+    const orders= await this.orderRepository.findOne({where:{id: id},relations:{orderDetails:{products:true}}});
     if(!orders){
        throw new NotFoundException(`no se encontró la order con id ${id}`)
     };
-    return orders
+       return orders
     }
     //* POST/ORDERS
     async addOrder(data:CreateOrderDto){
@@ -68,6 +69,6 @@ export class OrderRepository{
         const newOrder=  this.orderRepository.create({...data, date, user ,orderDetails: orderDetail});
         await this.orderRepository.save(newOrder);
         // 7. Retornar la orden con los detalles y productos
-        return this.orderRepository.findOne({where: {id: newOrder.id}, relations:{user:true, orderDetails:{products:true}}});
+        return this.orderRepository.findOne({where: {id: newOrder.id}, relations:{orderDetails:{products:true}}});
     }
 }

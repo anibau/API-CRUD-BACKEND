@@ -36,6 +36,9 @@ let CategoriesRepository = class CategoriesRepository {
                 const newCategory = this.categoriesRepository.create({ name: obj.categories });
                 await this.categoriesRepository.save(newCategory);
             }
+            else {
+                throw new common_1.BadRequestException(`The category ${obj.categories} already exist`);
+            }
         }
         ;
         return 'las categorias fueron agregadas';

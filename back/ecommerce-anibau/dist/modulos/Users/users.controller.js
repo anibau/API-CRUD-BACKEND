@@ -26,20 +26,12 @@ let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
     }
-    async getUsers() {
+    async getUsers(page = 1, limit = 5) {
         try {
-            return await this.usersService.getUsers();
+            return await this.usersService.getUsers(page, limit);
         }
         catch {
             throw new common_1.BadRequestException('Error al obtener los usuarios');
-        }
-    }
-    getUserbyQuery(page = 1, limit = 5) {
-        try {
-            return this.usersService.getUserbyQueryParams(page, limit);
-        }
-        catch {
-            throw new common_1.BadRequestException('Error al obtener el producto por query ');
         }
     }
     getUserbyId(id) {
@@ -80,20 +72,12 @@ __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard, roles_guard_1.RolesGuard),
     (0, common_1.HttpCode)(200),
     openapi.ApiResponse({ status: 200, type: [require("./user.entity").Users] }),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], UsersController.prototype, "getUsers", null);
-__decorate([
-    (0, common_1.Get)('/queries'),
-    (0, common_1.HttpCode)(200),
-    openapi.ApiResponse({ status: 200, type: [require("./user.entity").Users] }),
     __param(0, (0, common_1.Query)('page')),
     __param(1, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number]),
-    __metadata("design:returntype", void 0)
-], UsersController.prototype, "getUserbyQuery", null);
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "getUsers", null);
 __decorate([
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)(':id'),

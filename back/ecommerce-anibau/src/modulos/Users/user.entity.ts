@@ -26,7 +26,7 @@ export class Users {
     @ApiProperty({
             description:'Contraseña encriptada tipo string',
         })
-    @Column({type:'varchar', nullable:false}) //, length:20
+    @Column({type:'varchar', nullable:false}) // length:20
     password: string
 
     @ApiProperty({

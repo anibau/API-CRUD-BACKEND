@@ -24,10 +24,14 @@ let ProductRepository = class ProductRepository {
         this.productRepository = productRepository;
         this.categoriesRepository = categoriesRepository;
     }
-    async getProducts() {
-        return this.productRepository.find({ relations: {
-                category: true
-            } });
+    async getProducts(page, limit) {
+        const initialIndex = (page - 1) * limit;
+        const lastIndex = initialIndex + limit;
+        const products = await this.productRepository.find({ relations: { category: true } });
+        if (!products) {
+            throw new common_1.BadRequestException('no se encontraron productos');
+        }
+        return products.slice(initialIndex, lastIndex);
     }
     async addProductJSON() {
         for (const obj of data) {
@@ -40,6 +44,9 @@ let ProductRepository = class ProductRepository {
                 }
                 const newProduct = this.productRepository.create({ ...obj, category });
                 await this.productRepository.save(newProduct);
+            }
+            else {
+                throw new common_1.BadRequestException(`The product ${obj.name} already exist`);
             }
         }
         ;

@@ -16,8 +16,8 @@ let ProductService = class ProductService {
     constructor(productRepository) {
         this.productRepository = productRepository;
     }
-    async getProduct() {
-        return this.productRepository.getProducts();
+    async getProduct(page, limit) {
+        return this.productRepository.getProducts(page, limit);
     }
     async addProductJSON() {
         return this.productRepository.addProductJSON();
