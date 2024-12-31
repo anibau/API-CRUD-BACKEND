@@ -42,13 +42,13 @@ Esta API permite gestionar un sistema de ecommerce. Incluye operaciones CRUD par
 
 -  Respuestas en formato JSON.
 
-##**Requisitos**
+## **Requisitos**
 
 -  Node.js 16+
 -  npm
 -  Base de datos PostgreSQL
 
-##**Instalación**
+## **Instalación**
 
 1.- Clona este repositorio:
     
@@ -78,14 +78,14 @@ Esta API permite gestionar un sistema de ecommerce. Incluye operaciones CRUD par
 
     npm start
 
-##**Uso**
+## **Uso**
 
 La API puede probarse mediante herramientas como **Postman, thunder client, Insomnia** o directamente desde la interfaz de **Swagger**.
 Ejemplo:
 
     GET http://localhost:3000/products
 
-##**Documentación con Swagger**
+## **Documentación con Swagger**
 
 La API incluye una documentación interactiva generada con Swagger. Una vez que la aplicación esté en ejecución, accede a:
 
@@ -93,7 +93,7 @@ La API incluye una documentación interactiva generada con Swagger. Una vez que 
 
 Allí encontrarás ejemplos de solicitudes, respuestas y una interfaz para probar los endpoints directamente.
 
-##**Endpoints**
+## **Endpoints**
 
 **Base URL:**
 
