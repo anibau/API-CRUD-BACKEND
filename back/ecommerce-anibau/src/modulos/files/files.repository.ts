@@ -33,6 +33,5 @@ export class FilesRepository{
         product.imgUrl=Result.url;
         await this.productRepository.save(product);
         return { message: 'Imagen actualizada exitosamente', url: Result.url };
-
     }
 }
