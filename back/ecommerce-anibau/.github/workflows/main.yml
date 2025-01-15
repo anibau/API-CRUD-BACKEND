@@ -6,7 +6,7 @@ on:
       - "main"
 jobs:
   build:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     steps:
     -
       name: Checkout
@@ -27,6 +27,6 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/nestdemo:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/nestdemo:latests
         
     
