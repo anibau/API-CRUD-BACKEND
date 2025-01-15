@@ -5,13 +5,16 @@ FROM node:18
 WORKDIR /app
 
 # Copia los archivos de dependencias al directorio de trabajo
-COPY ecommerce-anibau/package*.json ./
+COPY package*.json ./
+
+# Copia el archivo .env al contenedor
+COPY .env .
 
 # Instala las dependencias del proyecto
 RUN npm install
 
 # Copia todo el código del proyecto al contenedor
-COPY ecommerce-anibau/ ./
+COPY . .
 
 # Construye la aplicación (compila TypeScript a JavaScript)
 RUN npm run build
