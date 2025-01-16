@@ -7,8 +7,9 @@ WORKDIR /app
 # Copia los archivos de dependencias al directorio de trabajo
 COPY package*.json ./
 
-# Copia el archivo .env al contenedor .env .
-#COPY .env .
+# Copia el archivo .env al contenedor .env . docker-config-manual
+# para crear imagen de despliegue comentar .env, luego no afecta
+COPY .env .
 
 # Instala las dependencias del proyecto
 RUN npm install
