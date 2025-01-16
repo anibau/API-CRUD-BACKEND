@@ -27,6 +27,6 @@ jobs:
         context: ./back/ecommerce-anibau
         file: ./back/ecommerce-anibau/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/nestdemo:latests
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/nestdemo:latest
         
     
