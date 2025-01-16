@@ -7,8 +7,8 @@ WORKDIR /app
 # Copia los archivos de dependencias al directorio de trabajo
 COPY package*.json ./
 
-# Copia el archivo .env al contenedor
-COPY .env .
+# Copia el archivo .env al contenedor .env .
+COPY ./back/ecommerce-anibau/.env .
 
 # Instala las dependencias del proyecto
 RUN npm install
