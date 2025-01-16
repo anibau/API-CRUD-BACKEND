@@ -24,8 +24,8 @@ jobs:
       name: Build and push
       uses: docker/build-push-action@v5
       with:
-        context: /back/ecommerce-anibau
-        file: /back/ecommerce-anibau/Dockerfile
+        context: ./back/ecommerce-anibau
+        file: ./back/ecommerce-anibau/Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/nestdemo:latests
         
