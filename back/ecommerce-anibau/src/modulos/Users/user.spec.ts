@@ -61,13 +61,13 @@ describe('pruebas unitarias UserService', ()=>{
         expect(userService).toBeDefined()
     })
     it('getUser() retorna array', async()=>{
-        const users=  await userService.getUsers();
+        const users=  await userService.getUsers(1,5);
         expect(users).toBeInstanceOf(Array)
         expect(users).toHaveLength(1)
     })
     it('getUser() retorna error al no encontrar usuarios', async()=>{
         (mockUserRepository.getUser as jest.Mock).mockImplementationOnce(()=>Promise.reject(new Error('no se encontraron usuarios')));
-        await expect(userService.getUsers()).rejects.toThrow('no se encontraron usuarios')
+        await expect(userService.getUsers(1,5)).rejects.toThrow('no se encontraron usuarios')
     })
     it('getUserbyId() retorna un user', async()=>{
         const user= await userService.getUserbyId('11hj');

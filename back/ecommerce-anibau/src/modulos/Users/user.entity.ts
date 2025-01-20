@@ -57,7 +57,7 @@ export class Users {
     @ApiProperty({
         description:'Relacion de Orders del usuario',
     })
-    @OneToMany(()=>Orders, (order)=>order.user, {cascade:true})
+    @OneToMany(()=>Orders, (order)=>order.user, {cascade:true, onDelete:'CASCADE'})
     orders: Orders[]
 
     @ApiProperty({

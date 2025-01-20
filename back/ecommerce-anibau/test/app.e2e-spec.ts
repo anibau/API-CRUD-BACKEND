@@ -37,10 +37,7 @@ describe('AppController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
   })
-  afterAll(async()=>{
-    await app.close()
-    console.log('conexiones cerradas...')
-  })
+  
 
   it('GET/user retorne un array de usuarios y status 200', async() => {
     const req= await request(app.getHttpServer()).get('/users').set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyZDFjZGFlNC0wMmRlLTRlODktYTdkMy1lMWVkOTQzY2Q2ZjkiLCJpZCI6IjJkMWNkYWU0LTAyZGUtNGU4OS1hN2QzLWUxZWQ5NDNjZDZmOSIsImVtYWlsIjoic2h1c2hpQG1haWwuY29tIiwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MzQxNDUyMjksImV4cCI6MTczNDE0ODgyOX0.zbosOd8IZ_5TIdVBgH5HCDluq21XESWarPjUVXjf0qE')
@@ -48,7 +45,7 @@ describe('AppController (e2e)', () => {
     expect(req.body).toBeInstanceOf(Array)
   })
   it('GET/user/:id retorne un objeto de usuarios y status 200', async() => {
-    const req= await request(app.getHttpServer()).get('/users/2d1cdae4-02de-4e89-a7d3-e1ed943cd6f9 ')
+    const req= await request(app.getHttpServer()).get('/users/7b23d63e-8f46-485e-9b73-e10f3b25f435')
     expect(req.status).toBe(200)
     expect(req.body).toBeInstanceOf(Object)
   })
@@ -68,7 +65,7 @@ describe('AppController (e2e)', () => {
     expect(req.body).toBeInstanceOf(Array)
   })
   it('GET/products/:id retorne un objeto de usuarios y status 200', async() => {
-    const req= await request(app.getHttpServer()).get('/products/0e9d5c39-a75b-4fa5-826a-35ac9af1555f')
+    const req= await request(app.getHttpServer()).get('/products/6f3b5c5c-cd81-4640-a24e-7c309f55ba03')
     expect(req.status).toBe(200)
     expect(req.body).toBeInstanceOf(Object)
     expect(req.body).toHaveProperty('category')
@@ -83,5 +80,10 @@ describe('AppController (e2e)', () => {
     const req= await request(app.getHttpServer()).delete(`/users/${id}`)
     expect(req.status).toBe(404)
     expect(req.body.message).toBe(`usuario con id ${id} no encontrado`)
+  })
+
+  afterAll(async()=>{
+    await app.close()
+    console.log('conexiones cerradas...')
   })
 });

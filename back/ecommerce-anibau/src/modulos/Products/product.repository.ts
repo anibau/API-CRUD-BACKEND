@@ -43,7 +43,7 @@ export class ProductRepository {
       where:{id: id}, relations: {category:true}
     });
     if(!product){
-      throw new NotFoundException(`error al obtener el producto por id ${id}`)
+      throw new NotFoundException(`error: producto por id ${id} no encontrado`)
     }
     return product
   }
@@ -81,6 +81,10 @@ export class ProductRepository {
       if (!product) {
         throw new NotFoundException(`el producto ${id} no existe`);
       };
+      const otherproduct= await this.productRepository.findOne({where:{name:data.name}});
+      if(product.id !== otherproduct.id){
+        throw new BadRequestException(`el producto con nombre ${data.name} ya existe`)
+      }
       //verificar si categorie existe o sino crearla
       const {categories:categName, ...restProduct }= data;
       if(categName){

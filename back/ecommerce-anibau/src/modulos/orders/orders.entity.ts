@@ -15,7 +15,7 @@ export class Orders{
     @ApiProperty({
         description:'Relacion de Users al que pertenece'
     })
-    @ManyToOne(()=>Users, (user)=>user.orders)
+    @ManyToOne(()=>Users, (user)=>user.orders, {onDelete:'CASCADE'})
     user: Users
 
     /**Fecha en la que fue generada la orden */

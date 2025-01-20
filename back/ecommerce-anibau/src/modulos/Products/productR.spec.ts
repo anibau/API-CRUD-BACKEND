@@ -58,7 +58,7 @@ describe('productRepository testing unitario', ()=>{
     expect(productRepository).toBeDefined()
     })
     it('getProducts() retorna a array con categorias relacionadas', async()=>{
-        const products= await productRepository.getProducts();
+        const products= await productRepository.getProducts(1,6);
         expect(products).toHaveLength(1)
         expect(products).toBeInstanceOf(Array)
         expect(products[0]).toBeInstanceOf(Object)
@@ -74,7 +74,7 @@ describe('productRepository testing unitario', ()=>{
         })
     })
     it('getProductbyId() retorna error', async()=>{
-        await expect(productRepository.getProductbyId('dos')).rejects.toThrow('error al obtener el producto por id dos')
+        await expect(productRepository.getProductbyId('dos')).rejects.toThrow('error: producto por id dos no encontrado')
     })
     it('deleteProduct() retorna mensaje exitoso', async()=>{
         (mockProductRepository.findOne as jest.Mock).mockResolvedValue({id: 'uno',

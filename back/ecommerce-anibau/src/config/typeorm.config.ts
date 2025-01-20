@@ -8,8 +8,10 @@ import { Products } from "../modulos/Products/product.entity";
 import { Users } from "../modulos/Users/user.entity";
 import { DataSource, DataSourceOptions } from "typeorm";
 
+//cargar variables de entorno desde .env
 dotenvConfig({path:'.env'})
 
+//objeto de configuracion postgres
 const config={
         type: 'postgres',
         database: process.env.DB_DATABASE,
@@ -25,5 +27,7 @@ const config={
         //logging: true,
         //dropSchema:true,
 }
+//registra la configuración con un nombre, en este caso, 'typeorm'.
 export default registerAs('typeorm', ()=>config);
+// Se instancia una nueva conexión usando el objeto config y se espera que cumpla con la interfaz DataSourceOptions .
 export const connectionSource= new DataSource(config as DataSourceOptions)

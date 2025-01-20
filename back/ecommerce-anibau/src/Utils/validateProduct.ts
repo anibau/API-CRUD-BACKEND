@@ -1,5 +1,6 @@
+import { ProductDto } from "src/modulos/Products/product.dto";
 
-export function validateProduct(data): boolean{
+export function validateProduct(data:ProductDto): boolean{
     const validateP= 
     data.name !== undefined &&
     data.price !== undefined &&

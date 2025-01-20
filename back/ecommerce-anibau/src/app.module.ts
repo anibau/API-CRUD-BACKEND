@@ -13,14 +13,19 @@ import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
+    // configuracion para acceso global de las variables de entorno
     ConfigModule.forRoot({
       isGlobal:true,
     load: [typeormConfig]
     }),
+
+    // configuracion de base datos a traves de typeorm con la app
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (ConfigService: ConfigService) => ConfigService.get('typeorm'),
     }),
+
+    // modulos de la aplicacion
     UsersModule,
     AuthModule,
     ProductModule,
@@ -28,6 +33,8 @@ import { JwtModule } from '@nestjs/jwt';
     OrderDetailModule,
     OrdersModule,
     FilesModule,
+
+    //configuracion global de JWT para autenticacion de usuarios
     JwtModule.register({
       global:true,
       signOptions:{expiresIn:'1h'},

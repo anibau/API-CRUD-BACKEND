@@ -7,6 +7,8 @@ import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // pipe global para manejo de errores
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist:true,
@@ -21,10 +23,12 @@ async function bootstrap() {
       },
     })
   )
+  //midleware global de las peticiones http
   app.use(LoggerMiddleware);
   const adminUserService= app.get(AuthService);
   await adminUserService.createAdminUser();
 
+  //configuracion de documentacion swagger
   const swaggerConfig= new DocumentBuilder()
                         .setTitle('api-ecommerce-backend')
                         .setDescription('Esta es una Api creada con NestJS desarrollada como proyecto del modulo 4 de la especializacion backend de la carrera FullStack Developer de Henry')
@@ -33,6 +37,8 @@ async function bootstrap() {
                         .build();
   const document= SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('API', app, document)
+
+  // el servidor se mantiene escuchando
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
