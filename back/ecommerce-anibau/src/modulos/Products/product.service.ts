@@ -11,6 +11,11 @@ export class ProductService {
   async getProduct(page: number, limit: number) {
     return this.productRepository.getProducts(page, limit);
   }
+
+  async productByNAME(dataname){
+    return this.productRepository.productByName(dataname)
+  }
+
   //* GET/SEEDER
   async addProductJSON(){
     return this.productRepository.addProductJSON()

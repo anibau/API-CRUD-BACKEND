@@ -11,18 +11,27 @@ export class ProductRepository {
   constructor(@InjectRepository(Products) private productRepository: Repository<Products>,
   @InjectRepository(Categories) private categoriesRepository: Repository <Categories>
 ){}
-  //* GET/PRODUCTS/
-  async getProducts(page:number, limit:number) {
-    const initialIndex= (page-1)*limit;
-    const lastIndex= initialIndex+limit;
-    
-    const products= await this.productRepository.find({relations:{category:true}});
-    if(!products){
-      throw new BadRequestException('no se encontraron productos')
-    }
-    return products.slice(initialIndex, lastIndex)
+//* GET/PRODUCTS/
+async getProducts(page:number, limit:number) {
+  const initialIndex= (page-1)*limit;
+  const lastIndex= initialIndex+limit;
+  
+  const products= await this.productRepository.find({relations:{category:true}});
+  if(!products){
+    throw new BadRequestException('no se encontraron productos')
   }
-  //* GET/SEEDER
+  return products.slice(initialIndex, lastIndex)
+}
+
+
+ async productByName(dataname: string) {
+  const productName= await this.productRepository.findOne({where:{name:dataname}});
+  if(!productName){
+    throw new NotFoundException('producto no encontrado')
+  }
+  return productName
+}
+//* GET/SEEDER
   async addProductJSON(){
     for(const obj of data){
       const product= await this.productRepository.findOne({where:{name: obj.name}});

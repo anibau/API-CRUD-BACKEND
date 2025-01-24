@@ -43,6 +43,15 @@ export class ProductsController {
   async addProductJSON(){
     return this.productsService.addProductJSON()
   }
+ 
+  @Get(':name')
+  async productByName(@Param('name') dataname: string){
+    try{
+      return this.productsService.productByNAME(dataname)
+    } catch{
+      throw new BadRequestException('error al obtener producto por nombre')
+    }
+  }
 
   //* GET/PRODUCTS/:ID
   @Get(':id')
@@ -98,4 +107,6 @@ export class ProductsController {
       throw new BadRequestException('Error al eliminar el products por id '+id)
     }
   }
+
+  
 }
