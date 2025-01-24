@@ -93,6 +93,10 @@ La API incluye una documentación interactiva generada con Swagger. Una vez que 
 
 Allí encontrarás ejemplos de solicitudes, respuestas y una interfaz para probar los endpoints directamente.
 
+
+**Interfaz de documentacion**
+![Documenacion swager de API](back/ecommerce-anibau/src/img/swager-api.png)
+
 ## **Endpoints**
 
 **Base URL:**
