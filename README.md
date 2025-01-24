@@ -97,6 +97,8 @@ Allí encontrarás ejemplos de solicitudes, respuestas y una interfaz para proba
 **Interfaz de documentacion**
 ![Documenacion swager de API](back/ecommerce-anibau/src/img/swager-api.png)
 
+
+
 ## **Endpoints**
 
 **Base URL:**
